@@ -1,0 +1,25 @@
+
+
+.row:after{
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.row{
+    margin-top: 2vw;
+}
+
+.columnCh{
+    float: left;
+    width: 30%;
+    text-align: right;
+
+}
+
+.column{
+    float: left;
+    width: 70%;
+    text-align: left;
+    margin-top: .5vw;
+}

@@ -1,0 +1,33 @@
+
+
+<ion-content padding>
+
+  <div style="text-align: center;">
+   <img src="assets/imgs/drakaarriba.jpg" alt="">
+  
+  </div>
+
+  <ion-item>
+    <ion-label position="floating">Usuario</ion-label>
+    <ion-input [(ngModel)]="usuario" [color]="colorUsuario" placeholder="Ej. JoseManuelGdlO"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">Contraseña</ion-label>
+    <ion-input [(ngModel)]="contra" [color]="colorContra" type="password" placeholder="************"></ion-input>
+  </ion-item>
+
+  <div class="row">
+    <div class="columnCh">
+      <ion-checkbox [(ngModel)]="check" color="primary"></ion-checkbox>
+    </div>
+    <div class="column">
+      <ion-label color="primary"> ¡Recuerdame!</ion-label>
+    </div>
+  </div>
+  
+</ion-content>
+
+<ion-footer>
+    <ion-button expand="full" (click)="iniciarSesion()">Iniciar Sesion</ion-button>
+  </ion-footer>

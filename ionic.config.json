@@ -1,5 +1,7 @@
 {
   "name": "DrakarQR",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
