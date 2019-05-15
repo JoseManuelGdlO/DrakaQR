@@ -13,7 +13,7 @@ export class HttpService {
  
     //alert(usuario+contra);
    
-   var url = 'http://avisositd.xyz/mobiliaria/loginMobiliaira.php?usuario='+usuario+'&contra='+contra;
+   var url = 'http://192.168.0.15/laravel_apps/Draka/public/login/'+usuario+'/'+contra;
    return new Promise((resolve, reject) => {
     this.http.get(url)
        .subscribe(data => {
@@ -23,4 +23,48 @@ export class HttpService {
         });
    });
   }
+
+  mostrar(){
+ 
+    //alert(usuario+contra);
+   
+   var url = 'http://192.168.0.15:80/laravel_apps/Draka/public/usuarios';
+   return new Promise((resolve, reject) => {
+    this.http.get(url)
+       .subscribe(data => {
+         resolve(data);
+        }, (err) =>{
+          reject(err);    
+        });
+   });
+  }
+
+actualizarUsuario(data:any, id:string){
+
+  var url = 'http://192.168.0.15/laravel_apps/Draka/public/actualizarUsuario/'+data.nombreCompleto+'/'+data.usuario+'/'+data.contra+'/2/'+id;
+  return new Promise((resolve, reject) => {
+   this.http.get(url)
+      .subscribe(data => {
+        resolve(data);
+       }, (err) =>{
+         reject(err);    
+       });
+  });
+
+}
+
+eliminarUsuario(id:string){
+
+  var url = 'http://192.168.0.15/laravel_apps/Draka/public/eliminarUsuario/'+id;
+  return new Promise((resolve, reject) => {
+   this.http.get(url)
+      .subscribe(data => {
+        resolve(data);
+       }, (err) =>{
+         reject(err);    
+       });
+  });
+
+}
+
 }

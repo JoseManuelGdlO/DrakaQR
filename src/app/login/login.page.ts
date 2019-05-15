@@ -74,6 +74,7 @@ export class LoginPage implements OnInit {
 
   }
 
+  result:any;
   async login(usuario:string, contra:string){
 
     const loading = await this.loadingCtrl.create({
@@ -84,10 +85,19 @@ export class LoginPage implements OnInit {
 
     this.http.login(this.usuario,this.contra).then(
       async (data) => { 
-        console.log(data)  
-  
+        console.log(data);
   
        await loading.onDidDismiss();
+
+       this.result =data;
+
+       if(this.result.id == 0){
+        this.incorrectoToast("El usuario y la contraseña es incorrecto");
+       }else{
+        this.incorrectoToast("Bienvenido");
+
+
+       }
   
   
        
@@ -102,6 +112,14 @@ export class LoginPage implements OnInit {
   async presentToast(tipo:string) {
     const toast = await this.toastController.create({
       message: 'El campo '+tipo+'  esta vacio',
+      duration: 2000
+    });
+    toast.present();
+  }
+
+  async incorrectoToast(tipo:string) {
+    const toast = await this.toastController.create({
+      message: tipo,
       duration: 2000
     });
     toast.present();
