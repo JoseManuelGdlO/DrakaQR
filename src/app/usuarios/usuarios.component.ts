@@ -3,6 +3,7 @@ import { ModalController, AlertController } from '@ionic/angular';
 import { EstadisticasComponent } from '../estadisticas/estadisticas.component';
 import { HttpService } from '../http.service';
 import { ToastController } from '@ionic/angular';
+import { ChatadminComponent } from '../chatadmin/chatadmin.component';
 
 
 
@@ -216,6 +217,15 @@ export class UsuariosComponent implements OnInit {
       duration: 2000
     });
     toast.present();
+  }
+
+  async mensajeModal(){
+    const modal = await this.modalController.create({
+      component: ChatadminComponent,
+      
+    });
+
+    await modal.present();
   }
 
 

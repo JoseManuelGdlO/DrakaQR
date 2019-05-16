@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ToastController, LoadingController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { HttpService } from '../http.service';
+import { NavigationExtras, Route, Router } from '@angular/router';
 
 
 @Component({
@@ -18,7 +19,7 @@ export class LoginPage implements OnInit {
 
   check:boolean;
 
-  constructor(public toastController:ToastController, public storage:Storage ,public http:HttpService, public loadingCtrl:LoadingController) {
+  constructor(public toastController:ToastController, public storage:Storage ,public http:HttpService, public loadingCtrl:LoadingController, public router:Router) {
 
     var usuarioLlegada;
     var contraLlegada;
@@ -85,7 +86,7 @@ export class LoginPage implements OnInit {
 
     this.http.login(this.usuario,this.contra).then(
       async (data) => { 
-        console.log(data);
+       // console.log(data);
   
        await loading.onDidDismiss();
 
@@ -94,7 +95,32 @@ export class LoginPage implements OnInit {
        if(this.result.id == 0){
         this.incorrectoToast("El usuario y la contraseña es incorrecto");
        }else{
-        this.incorrectoToast("Bienvenido");
+        
+
+        if(this.result.activo == 1){
+
+          console.log(this.result.id);
+
+          let navigationExtras: NavigationExtras = {
+            state: {
+              id_usuario: this.result.id
+            }
+          };
+
+          if(this.result.rol == 1){
+            ///admin
+            this.incorrectoToast("Bienvenido Administrador");
+
+            this.router.navigate(['admin'], navigationExtras);
+          }else{
+            ///trabajador
+            this.incorrectoToast("Bienvenido Materialista");
+            this.router.navigate(['home'], navigationExtras);
+          }
+
+        }else{
+          this.incorrectoToast("El usuario fue eliminado por el Administrador");
+        }
 
 
        }

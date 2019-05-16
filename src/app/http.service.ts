@@ -7,13 +7,15 @@ import { HttpClient } from '@angular/common/http';
 })
 export class HttpService {
 
+  inicioURL:string = "http://draka.avisositd.xyz/";
+
   constructor(public http: HttpClient) { }
 
   login(usuario:string, contra:string){
  
     //alert(usuario+contra);
    
-   var url = 'http://192.168.0.15/laravel_apps/Draka/public/login/'+usuario+'/'+contra;
+   var url = this.inicioURL+'login/'+usuario+'/'+contra;
    return new Promise((resolve, reject) => {
     this.http.get(url)
        .subscribe(data => {
@@ -28,7 +30,22 @@ export class HttpService {
  
     //alert(usuario+contra);
    
-   var url = 'http://192.168.0.15:80/laravel_apps/Draka/public/usuarios';
+   var url = this.inicioURL+'usuarios';
+   return new Promise((resolve, reject) => {
+    this.http.get(url)
+       .subscribe(data => {
+         resolve(data);
+        }, (err) =>{
+          reject(err);    
+        });
+   });
+  }
+
+  mostrarAlmacen(){
+ 
+    //alert(usuario+contra);
+   
+   var url = this.inicioURL+'mostrarAlmacen';
    return new Promise((resolve, reject) => {
     this.http.get(url)
        .subscribe(data => {
@@ -41,7 +58,21 @@ export class HttpService {
 
 actualizarUsuario(data:any, id:string){
 
-  var url = 'http://192.168.0.15/laravel_apps/Draka/public/actualizarUsuario/'+data.nombreCompleto+'/'+data.usuario+'/'+data.contra+'/2/'+id;
+  var url = this.inicioURL+'actualizarUsuario/'+data.nombreCompleto+'/'+data.usuario+'/'+data.contra+'/2/'+id;
+  return new Promise((resolve, reject) => {
+   this.http.get(url)
+      .subscribe(data => {
+        resolve(data);
+       }, (err) =>{
+         reject(err);    
+       });
+  });
+
+}
+
+agregarRack(data:any){
+
+  var url = this.inicioURL+'insertarAlmacen/'+data.almacen+'/'+data.rack+'/'+data.pasillo+'/'+data.cantidad
   return new Promise((resolve, reject) => {
    this.http.get(url)
       .subscribe(data => {
@@ -55,7 +86,7 @@ actualizarUsuario(data:any, id:string){
 
 eliminarUsuario(id:string){
 
-  var url = 'http://192.168.0.15/laravel_apps/Draka/public/eliminarUsuario/'+id;
+  var url = this.inicioURL+'eliminarUsuario/'+id;
   return new Promise((resolve, reject) => {
    this.http.get(url)
       .subscribe(data => {
@@ -66,5 +97,18 @@ eliminarUsuario(id:string){
   });
 
 }
+
+mostrarUtlimoCambio(){
+  var url = this.inicioURL+'mostrarUltimoCambio';
+  return new Promise((resolve, reject) => {
+   this.http.get(url)
+      .subscribe(data => {
+        resolve(data);
+       }, (err) =>{
+         reject(err);    
+       });
+  });
+}
+
 
 }
