@@ -12,17 +12,17 @@
 <ion-content >
 
   <ion-list>
-      <ion-item-sliding>
-          <ion-item>
+      <ion-item-sliding *ngFor="let item of usuarios">
+          <ion-item >
             
              <div style="text-align: center; padding-left: 10vw;">
                  <ion-avatar style="margin-left: 25vw;">
                       <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
                   </ion-avatar>
               
-                <h3 style="font-size: 5vw">Jose Manuel Garcia de la O</h3>
-                <p style="font-size: 3vw">Usuario: JoseManuelGdlO</p>
-                <p style="font-size: 3vw">Contraseña: qwerty123</p>
+                <h3 style="font-size: 5vw">{{item.nombre}}</h3>
+                <p style="font-size: 3vw">Usuario: {{item.usuario}}</p>
+                <p style="font-size: 3vw">Contraseña: {{item.contrasena}}</p>
              </div>
                   
               
@@ -30,11 +30,12 @@
             
           </ion-item>
           <ion-item-options side="end">
-            <ion-item-option color="danger" (click)="eliminar()">Eliminar</ion-item-option>
-            <ion-item-option (click)="presentAlertPromptModificar()">Modificar</ion-item-option>
+            <ion-item-option color="danger" (click)="eliminar(item.id)">Eliminar</ion-item-option>
+            <ion-item-option (click)="presentAlertPromptModificar(item.id, item.nombre, item.usuario, item.contrasena)">Modificar</ion-item-option>
           </ion-item-options>
           <ion-item-options side="start">
-              <ion-item-option (click)="estadisticas()">Estadisticas y Movimientos</ion-item-option>
+              <ion-item-option (click)="estadisticas()">Estadisticas</ion-item-option>
+              <ion-item-option color="dark" (click)="mensajeModal()">Enviar Mensaje</ion-item-option>
             </ion-item-options>
         </ion-item-sliding>
   </ion-list>

@@ -18,12 +18,16 @@ import { HttpClientModule } from '@angular/common/http';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { EstadisticasComponent } from './estadisticas/estadisticas.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AlmacenComponent } from './almacen/almacen.component';
+import { ChatadminComponent } from './chatadmin/chatadmin.component';
 
 @NgModule({
-  declarations: [AppComponent, UsuariosComponent, EstadisticasComponent],
+  declarations: [AppComponent, UsuariosComponent, EstadisticasComponent, AlmacenComponent, ChatadminComponent],
   entryComponents: [
     UsuariosComponent,
-    EstadisticasComponent
+    EstadisticasComponent,
+    AlmacenComponent,
+    ChatadminComponent
   ],
   imports: [
     BrowserModule, 

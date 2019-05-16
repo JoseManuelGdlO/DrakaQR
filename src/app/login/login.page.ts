@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ToastController, LoadingController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { HttpService } from '../http.service';
+import { NavigationExtras, Route, Router } from '@angular/router';
 
 
 @Component({
@@ -18,7 +19,7 @@ export class LoginPage implements OnInit {
 
   check:boolean;
 
-  constructor(public toastController:ToastController, public storage:Storage ,public http:HttpService, public loadingCtrl:LoadingController) {
+  constructor(public toastController:ToastController, public storage:Storage ,public http:HttpService, public loadingCtrl:LoadingController, public router:Router) {
 
     var usuarioLlegada;
     var contraLlegada;
@@ -74,6 +75,7 @@ export class LoginPage implements OnInit {
 
   }
 
+  result:any;
   async login(usuario:string, contra:string){
 
     const loading = await this.loadingCtrl.create({
@@ -84,10 +86,44 @@ export class LoginPage implements OnInit {
 
     this.http.login(this.usuario,this.contra).then(
       async (data) => { 
-        console.log(data)  
-  
+       // console.log(data);
   
        await loading.onDidDismiss();
+
+       this.result =data;
+
+       if(this.result.id == 0){
+        this.incorrectoToast("El usuario y la contraseña es incorrecto");
+       }else{
+        
+
+        if(this.result.activo == 1){
+
+          console.log(this.result.id);
+
+          let navigationExtras: NavigationExtras = {
+            state: {
+              id_usuario: this.result.id
+            }
+          };
+
+          if(this.result.rol == 1){
+            ///admin
+            this.incorrectoToast("Bienvenido Administrador");
+
+            this.router.navigate(['admin'], navigationExtras);
+          }else{
+            ///trabajador
+            this.incorrectoToast("Bienvenido Materialista");
+            this.router.navigate(['home'], navigationExtras);
+          }
+
+        }else{
+          this.incorrectoToast("El usuario fue eliminado por el Administrador");
+        }
+
+
+       }
   
   
        
@@ -102,6 +138,14 @@ export class LoginPage implements OnInit {
   async presentToast(tipo:string) {
     const toast = await this.toastController.create({
       message: 'El campo '+tipo+'  esta vacio',
+      duration: 2000
+    });
+    toast.present();
+  }
+
+  async incorrectoToast(tipo:string) {
+    const toast = await this.toastController.create({
+      message: tipo,
       duration: 2000
     });
     toast.present();
