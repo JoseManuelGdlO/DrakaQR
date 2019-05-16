@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { BarcodeScanResult, BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { ToastController, AlertController } from '@ionic/angular';
 import { analyzeAndValidateNgModules } from '@angular/compiler';
+import { HttpService } from '../http.service';
+
 
 @Component({
   selector: 'app-tab1',
@@ -25,12 +27,14 @@ export class Tab1Page implements OnInit{
   proveedor: string;
   anioProduccion: string;
   noSerieProducto: string;
+  arreglodeRack = [];
   
 
   constructor(
       private barcodeScanner: BarcodeScanner,
       private toastCtrl: ToastController,
-      private alertCtrl: AlertController
+      private alertCtrl: AlertController,
+      private http : HttpService
   ) { 
     this.noSeries = [];
     this.jsonDataLector = [];
@@ -226,6 +230,7 @@ export class Tab1Page implements OnInit{
           console.log(resd);
           console.log("Cuarta bien");
         this.presentToast("Codigo Correcto","top","primary");
+        this.insertarProducto();
         //to go code
         }else{
           this.presentToast("Verifique cuarta letra de código","bottom","danger");
@@ -244,6 +249,29 @@ export class Tab1Page implements OnInit{
       
     }
 
+  }
+  
+  juntarArreglo(){
+    
+        for(var i = 0; i < this.noSeries.length; i++){
+          //console.log(this.noSeries[i].serie)
+
+          this.http.insertarProducto(
+            this.noSeries[i].serie,
+            this.codigoRack,
+            4,
+            this.noSeries[i].estado
+          ).then((inv)=>{
+            console.log(inv);
+          },(error)=>{
+            console.log("Error"+JSON.stringify(error));
+          })
+        }
+        
+  }
+
+  insertarProducto(){
+    
   }
 
 }
