@@ -1,6 +1,6 @@
 <ion-header>
-    <ion-toolbar>
-      <ion-title>
+    <ion-toolbar color="danger">
+      <ion-title color="light">
         Bajas
       </ion-title>
     </ion-toolbar>
@@ -9,20 +9,24 @@
   <ion-content>
       <!--this one is ready to go-->
       <ion-card>
-          <ion-button expand="full" class="botonSerie" (click)="escanearRack()">
+          <ion-button expand="full" class="botonSerie" (click)="scanCode()">
               <ion-ripple-effect></ion-ripple-effect>
               <ion-icon name="barcode"></ion-icon>
-              Escanear Producto
+              Escanear Producto a dar de baja
             </ion-button>
       
       <ion-list>
   
           <ion-item-sliding #slidingItem class="cardProducto" *ngFor="let serie of noSeries; index as i">
               <ion-item>
-                <h2>{{serie.serie}}</h2>
-                <h1>{{i}}</h1>
-                
-              </ion-item>
+                  <div class="divSerie">
+                    <span class="spanSerie">N° Serie: {{serie.seriem}}</span>
+                    <span class="spanEstado">Proveedor: {{serie.proveedro}}</span>
+                    <span class="spanEstado">Año de produccion: 20{{serie.anio}}</span>
+                    <span class="spanEstado">Status: {{serie.estado}}</span>
+                    <span class="spanEstado">Codigo: {{serie.serie}}</span>
+                  </div>
+                </ion-item>
               <ion-item-options side="end">
                 
                 <button class="botonBorrar" ion-button color="danger" (click)="borrar(i)">
@@ -49,8 +53,8 @@
               <ion-col size="9">
                   <ion-button expand="full" (click)="guardarChido()">
                       <ion-ripple-effect></ion-ripple-effect>
-                      <ion-icon name="checkmark"></ion-icon>
-                      Guardar
+                      <ion-icon name="trash"></ion-icon>
+                      Dar de baja
                     </ion-button>
               </ion-col>
             </ion-row>

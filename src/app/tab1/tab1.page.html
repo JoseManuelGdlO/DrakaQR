@@ -1,6 +1,6 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>
+  <ion-toolbar color="primary">
+    <ion-title color="light">
       Entregas
     </ion-title>
   </ion-toolbar>
@@ -22,7 +22,7 @@
             
           </ion-col>
           <ion-col size="3">
-              <ion-button expand="full" class="botonFoto" (click)="scanCode()">
+              <ion-button expand="full" class="botonFoto" (click)="scanCodeRack()">
                   <ion-ripple-effect></ion-ripple-effect>
                   <ion-icon name="camera"></ion-icon>
                 </ion-button>
@@ -33,21 +33,26 @@
     </ion-card>
     <!--this one is ready to go-->
     <ion-card>
-        <ion-button expand="full" class="botonSerie" (click)="escanearRack()">
+        <ion-button expand="full" class="botonSerie" (click)="scanCode()">
             <ion-ripple-effect></ion-ripple-effect>
             <ion-icon name="barcode"></ion-icon>
-            Escanear Producto
+             Escanear Producto
           </ion-button>
     
     <ion-list>
 
-        <ion-item-sliding #slidingItem class="cardProducto" *ngFor="let serie of noSeries; index as i">
+        <ion-item-sliding #slidingItem  *ngFor="let serie of noSeries; index as i">
             <ion-item>
-              <h2>{{serie.serie}}</h2>
-              
+              <div class="divSerie">
+                <span class="spanSerie">N° Serie: {{serie.seriem}}</span>
+                <span class="spanEstado">Proveedor: {{serie.proveedro}}</span>
+                <span class="spanEstado">Año de produccion: 20{{serie.anio}}</span>
+                <span class="spanEstado">Status: {{serie.estado}}</span>
+                <span class="spanEstado">Codigo: {{serie.serie}}</span>
+              </div>
             </ion-item>
+
             <ion-item-options side="end">
-              
               <button class="botonBorrar" ion-button color="danger" (click)="borrar(i)">
                   <ion-icon class="iconoborrar" name="trash">
                   </ion-icon>
