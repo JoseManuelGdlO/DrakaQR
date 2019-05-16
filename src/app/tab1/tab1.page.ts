@@ -3,6 +3,8 @@ import { BarcodeScanResult, BarcodeScanner } from '@ionic-native/barcode-scanner
 import { ToastController, AlertController } from '@ionic/angular';
 import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { HttpService } from '../http.service';
+import { LoginPage } from '../login/login.page';
+import { TabsPage } from '../tabs/tabs.page';
 
 
 @Component({
@@ -34,7 +36,8 @@ export class Tab1Page implements OnInit{
       private barcodeScanner: BarcodeScanner,
       private toastCtrl: ToastController,
       private alertCtrl: AlertController,
-      private http : HttpService
+      private http : HttpService,
+      public tabs : TabsPage
   ) { 
     this.noSeries = [];
     this.jsonDataLector = [];
@@ -45,7 +48,9 @@ export class Tab1Page implements OnInit{
     this.letratres = false;
     this.letracuatro = false;
     
+    
 
+    console.log("Id desde el infierno" +this.tabs.regresaId());
     this.estado = "D";
   }
 

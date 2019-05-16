@@ -44,14 +44,14 @@ const routes: Routes = [
         ]
       },
       {
-        path: '',
+        path: 'app',
         redirectTo: '/tabs/tab1',
         pathMatch: 'full'
       }
     ]
   },
   {
-    path: '',
+    path: 'app',
     redirectTo: '/tabs/tab1',
     pathMatch: 'full'
   }

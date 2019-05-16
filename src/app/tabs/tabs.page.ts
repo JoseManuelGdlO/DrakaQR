@@ -26,9 +26,11 @@ export class TabsPage{
   }
 
   mnss(){
-    console.log("ados mund crue");
     this.router.navigateByUrl('mensajes');
   }
 
+  public regresaId(){
+    return this.id
+  }
   
 }

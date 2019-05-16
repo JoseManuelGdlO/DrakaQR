@@ -115,7 +115,8 @@ export class LoginPage implements OnInit {
           }else{
             ///trabajador
             this.incorrectoToast("Bienvenido Materialista");
-            this.router.navigate(['home'], navigationExtras);
+            //this.router.navigate(['home'], navigationExtras);
+            this.router.navigateByUrl('/app/tabs/tab1', navigationExtras);
           }
 
         }else{
