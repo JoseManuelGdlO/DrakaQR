@@ -2,10 +2,20 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'admin', pathMatch: 'full' },
+  { path: '', loadChildren: './tabs/tabs.module#TabsPageModule' },  { path: 'informacion', loadChildren: './informacion/informacion.module#InformacionPageModule' }
+
+
+  
+  /*{ path: '', redirectTo: 'tabs', pathMatch: 'full' },
   { path: 'home', loadChildren: './home/home.module#HomePageModule' },
   { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
-  { path: 'admin', loadChildren: './admin/admin.module#AdminPageModule' }
+  { path: 'admin', loadChildren: './admin/admin.module#AdminPageModule' },
+  { path: 'tabs', loadChildren: './pages/tabs/tabs.module#TabsPageModule' },
+  { path: 'tab1', loadChildren: './pages/tab1/tab1.module#Tab1PageModule' },
+  { path: 'tab2', loadChildren: './pages/tab2/tab2.module#Tab2PageModule' },
+  { path: 'tab3', loadChildren: './pages/tab3/tab3.module#Tab3PageModule' }
+*/
+
 ];
 
 @NgModule({

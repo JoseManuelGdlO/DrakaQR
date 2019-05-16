@@ -1,0 +1,60 @@
+<ion-header>
+    <ion-toolbar>
+      <ion-title>
+        Bajas
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content>
+      <!--this one is ready to go-->
+      <ion-card>
+          <ion-button expand="full" class="botonSerie" (click)="escanearRack()">
+              <ion-ripple-effect></ion-ripple-effect>
+              <ion-icon name="barcode"></ion-icon>
+              Escanear Producto
+            </ion-button>
+      
+      <ion-list>
+  
+          <ion-item-sliding #slidingItem class="cardProducto" *ngFor="let serie of noSeries; index as i">
+              <ion-item>
+                <h2>{{serie.serie}}</h2>
+                <h1>{{i}}</h1>
+                
+              </ion-item>
+              <ion-item-options side="end">
+                
+                <button class="botonBorrar" ion-button color="danger" (click)="borrar(i)">
+                    <ion-icon class="iconoborrar" name="trash">
+                    </ion-icon>
+                </button>
+              </ion-item-options>
+            </ion-item-sliding>
+      </ion-list>
+    </ion-card>
+  </ion-content>
+  
+  <ion-footer>
+      <ion-toolbar>
+  
+          <ion-row>
+              <ion-col size="3">
+                  <ion-button color="warning" expand="full" (click)="cancelarChavos()">
+                      <ion-ripple-effect></ion-ripple-effect>
+                      <ion-icon name="close"></ion-icon>
+                      Cancelar
+                    </ion-button>
+              </ion-col>
+              <ion-col size="9">
+                  <ion-button expand="full" (click)="guardarChido()">
+                      <ion-ripple-effect></ion-ripple-effect>
+                      <ion-icon name="checkmark"></ion-icon>
+                      Guardar
+                    </ion-button>
+              </ion-col>
+            </ion-row>
+         
+      </ion-toolbar>
+    </ion-footer>
+  
