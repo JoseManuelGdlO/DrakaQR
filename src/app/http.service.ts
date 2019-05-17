@@ -153,4 +153,17 @@ crearConversacion(id_usuario_uno,id_material){
 }
 
 
+traerLogUsuario(id:any){
+  var url = this.inicioURL+'mostrarCambioID/'+id;
+  return new Promise((resolve, reject) => {
+   this.http.get(url)
+      .subscribe(data => {
+        resolve(data);
+       }, (err) =>{
+         reject(err);    
+       });
+  });
+}
+
+
 }

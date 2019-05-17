@@ -36,7 +36,7 @@
             <ion-item-option (click)="presentAlertPromptModificar(item.id, item.nombre, item.usuario, item.contrasena)">Modificar</ion-item-option>
           </ion-item-options>
           <ion-item-options side="start">
-              <ion-item-option (click)="estadisticas()">Historial</ion-item-option>
+              <ion-item-option (click)="estadisticas(item.id, item.nombre)">Historial</ion-item-option>
               <ion-item-option color="dark" (click)="mensajeModal(item.id)">Enviar Mensaje</ion-item-option>
             </ion-item-options>
         </ion-item-sliding>

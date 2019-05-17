@@ -206,9 +206,13 @@ export class UsuariosComponent implements OnInit {
 
   }
 
-  async estadisticas(){
+  async estadisticas(id:any,nombre:string){
     const modal = await this.modalController.create({
       component: EstadisticasComponent,
+      componentProps: { 
+        id_material: id,
+        nombre:nombre
+      }  
       
     });
 
