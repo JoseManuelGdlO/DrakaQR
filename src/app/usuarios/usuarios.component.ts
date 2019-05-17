@@ -85,6 +85,7 @@ export class UsuariosComponent implements OnInit {
           text: 'Agregar',
           handler: data => {
             console.log(JSON.stringify(data)); //to see the object
+            this.agregarUsuario(data);
             
           }
         }
@@ -92,6 +93,27 @@ export class UsuariosComponent implements OnInit {
     });
 
     await alert.present();
+  }
+
+
+  agregarUsuario(data){
+    this.http.agregarUsuario(data).then(
+      async (data) => { 
+        console.log(data) ; 
+  
+        
+        this.mostrarUsuarios();
+  
+        this.presentToast("Usuario Regisrado de manera Exitosa");
+  
+       
+      },
+      async (error) =>{
+        console.log("Error"+JSON.stringify(error));
+        this.presentToast("Ocurrio un error modificando el usuario revisa tu conexion a internet");
+      }
+    );
+
   }
 
   async presentAlertPromptModificar(id:string, nombre:string, usuario:string, contra:string) {

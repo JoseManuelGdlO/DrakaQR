@@ -142,7 +142,7 @@ export class Tab3Page implements OnInit{
             var respuesta = inv["id_producto"];
 
             if(respuesta != NaN){
-              this.presentToast("Datos Insertados Correctamente", "middle", "success");
+              this.presentToast("Producto Dado de baja Correctamente", "middle", "success");
             }else{
               this.presentToast("Error en la Inserción", "middle", "danger");
             }

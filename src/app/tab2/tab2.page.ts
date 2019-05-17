@@ -222,6 +222,14 @@ export class Tab2Page implements OnInit{
             console.log(inv);
 
             
+            var respuesta = inv["id_producto"];
+
+            if(respuesta != NaN){
+              this.presentToast("Cambio Realizado con exito Correctamente", "middle", "success");
+            }else{
+              this.presentToast("Error en la Inserción", "middle", "danger");
+            }
+            
           },(error)=>{
             console.log("Error"+JSON.stringify(error));
           })

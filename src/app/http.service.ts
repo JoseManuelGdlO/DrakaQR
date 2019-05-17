@@ -258,5 +258,19 @@ eliminarAlmacen(rack:any){
 
 }
 
+agregarUsuario(data){
+
+  var url = this.inicioURL+'insertarUsuario/'+data.nombreCompleto+'/'+data.usuario+'/'+data.contra+'/2/';
+  return new Promise((resolve, reject) => {
+   this.http.get(url)
+      .subscribe(data => {
+        resolve(data);
+       }, (err) =>{
+         reject(err);    
+       });
+  });
+
+}
+
 
 }
