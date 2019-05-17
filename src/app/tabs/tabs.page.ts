@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-tabs',
@@ -14,7 +15,8 @@ export class TabsPage{
   constructor(
     public router: Router,
     public route: ActivatedRoute,
-    public alertCtrl: AlertController
+    public alertCtrl: AlertController,
+    public storage:Storage
   ){
     this.route.queryParams.subscribe(params => {
       if (this.router.getCurrentNavigation().extras.state) {
@@ -50,6 +52,8 @@ export class TabsPage{
         }, {
           text: 'Salir',
           handler: () => {
+            this.storage.set('USER', '');
+            this.storage.set('CONTRA', '');
             this.router.navigateByUrl('');
           }
         }
