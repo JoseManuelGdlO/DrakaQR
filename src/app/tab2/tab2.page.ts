@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastController, AlertController } from '@ionic/angular';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+import { TabsPage } from '../tabs/tabs.page';
+import { HttpService } from '../http.service';
 
 @Component({
   selector: 'app-tab2',
@@ -24,27 +26,39 @@ export class Tab2Page implements OnInit{
   proveedor: string;
   anioProduccion: string;
   noSerieProducto: string;
-
-  constructor(
-    private barcodeScanner: BarcodeScanner,
-    private toastCtrl: ToastController,
-    private alertCtrl: AlertController
-) { 
-  this.noSeries = [];
-  this.jsonDataLector = [];
-  this.idCard = 0;
-
-  this.letrauno = false;
-  this.letrados = false;
-  this.letratres = false;
-  this.letracuatro = false;
+  arreglodeRack = [];
+  id_usuario: number;
   
 
-  this.estado = "D";
-}
+  constructor(
+      private barcodeScanner: BarcodeScanner,
+      private toastCtrl: ToastController,
+      private alertCtrl: AlertController,
+      private http : HttpService,
+      public tabs : TabsPage
+  ) { 
+    this.noSeries = [];
+    this.jsonDataLector = [];
+    this.idCard = 0;
+
+    this.letrauno = false;
+    this.letrados = false;
+    this.letratres = false;
+    this.letracuatro = false;
+    
+    
+    this.id_usuario = parseInt(this.tabs.regresaId());
+    console.log(this.id_usuario);
+    if (this.id_usuario == NaN) {
+      alert("Favor de cerrar sesion y volver a Iniciar");
+      navigator['app'].exitApp();
+    }
+    this.estado = "D";
+  }
 
   ngOnInit() {
   }
+
   async presentToast(mensaje : string, pos: any, color: string) {
     const toast = await this.toastCtrl.create({
       message : mensaje,
@@ -59,7 +73,6 @@ export class Tab2Page implements OnInit{
   escanearRack(codigo: string){
     
     
-
 
     this.producto = codigo.charAt(0);
     this.proveedor = codigo.charAt(1) + codigo.charAt(2) + codigo.charAt(3)
@@ -128,12 +141,12 @@ export class Tab2Page implements OnInit{
       });
   }
 
- 
+
   cancelarChavos(){
     this.noSeries= [];
     this.codigoRack = "";
-
   }
+
   guardarChido(){
     if (!this.codigoRack) {
       this.presentToast("Ingrese un codigo de Rack","bottom", "danger");
@@ -169,7 +182,8 @@ export class Tab2Page implements OnInit{
         if (resd == "NaN") {
           console.log(resd);
           console.log("Cuarta bien");
-        this.presentToast("Codigo Correcto","top","primary");
+        
+        this.juntarArreglo();
         //to go code
         }else{
           this.presentToast("Verifique cuarta letra de código","bottom","danger");
@@ -190,5 +204,43 @@ export class Tab2Page implements OnInit{
 
   }
   
+  juntarArreglo(){
+    
+    if (this.id_usuario == NaN) {
+      console.log("Error");
+    }
+    console.log(this.noSeries.length);
+        for(var i = 0; i < this.noSeries.length; i++){
+          //console.log(this.noSeries[i].serie)
+          
+
+          this.http.modificarLugardeRack(
+            this.noSeries[i].serie,
+            this.codigoRack
+          ).then((inv)=>{
+            console.log(inv);
+
+            
+          },(error)=>{
+            console.log("Error"+JSON.stringify(error));
+          })
+
+          this.http.insertaraCambios(
+            this.noSeries[i].serie,
+            this.noSeries[i].estado,
+            this.id_usuario
+          ).then((inv)=>{
+            console.log(inv);
+
+            
+          },(error)=>{
+            console.log("Error"+JSON.stringify(error));
+          })
+        }
+        this.cancelarChavos();
+        
+  }
+
+ 
 
 }
