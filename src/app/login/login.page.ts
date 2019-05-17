@@ -25,18 +25,20 @@ export class LoginPage implements OnInit {
     var contraLlegada;
 
     storage.get('USER').then((val) => {
-      if(val != null){
+      
         usuarioLlegada = val;
-      }
+        this.usuario = val;
+      
     });
     storage.get('CONTRA').then((val) => {
-      if(val != null){
+     
         contraLlegada = val;
-        this.login(usuarioLlegada, contraLlegada);
-      }
+        this.contra = val;
+        
     });
 
-    
+    this.login(usuarioLlegada, contraLlegada);
+      
 
    }
 

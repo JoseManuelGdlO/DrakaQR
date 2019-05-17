@@ -17,7 +17,10 @@ import { HttpService } from '../http.service';
 export class AdminPage implements OnInit {
   task:any;
   noticias:string;
+  estado:string;
+  nombre:string;
   id:any;
+  rack:string;
 
   constructor(public modalController:ModalController, 
     public storage:Storage,
@@ -54,11 +57,14 @@ export class AdminPage implements OnInit {
 
        this.http.mostrarUtlimoCambio().then(
         async (data) => { 
-          //console.log(data); 
+       //   console.log(data); 
           
           this.resultadoUltimoCambio = data;
 
           this.noticias = this.resultadoUltimoCambio.movimiento;
+          this.estado = this.resultadoUltimoCambio.estatus;
+          this.nombre = this.resultadoUltimoCambio.nombre;
+          this.rack = this.resultadoUltimoCambio.no_rack;
          
     
     
@@ -75,9 +81,12 @@ export class AdminPage implements OnInit {
   }
 
   async abrirModalUsuarios(){
+   
     const modal = await this.modalController.create({
       component: UsuariosComponent,
-      
+      componentProps: { 
+        id_usuario: this.id
+      }      
     });
 
     await modal.present();
