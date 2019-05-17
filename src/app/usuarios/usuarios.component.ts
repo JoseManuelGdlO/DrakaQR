@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ModalController, AlertController } from '@ionic/angular';
+import { Component, OnInit, Input } from '@angular/core';
+import { ModalController, AlertController, NavParams } from '@ionic/angular';
 import { EstadisticasComponent } from '../estadisticas/estadisticas.component';
 import { HttpService } from '../http.service';
 import { ToastController } from '@ionic/angular';
@@ -15,10 +15,14 @@ import { ChatadminComponent } from '../chatadmin/chatadmin.component';
 })
 export class UsuariosComponent implements OnInit {
 
+ 
+  ide_llego:string;
   usuarios:any;
 
-  constructor(public toastController: ToastController, public modalController:ModalController, public alertController:AlertController, public http:HttpService) {
+  constructor(public navParams:NavParams, public toastController: ToastController, public modalController:ModalController, public alertController:AlertController, public http:HttpService) {
 
+    console.log(this.navParams.get('id_usuario'));
+    this.ide_llego = this.navParams.get('id_usuario');
     this.mostrarUsuarios();
   
 
@@ -219,9 +223,13 @@ export class UsuariosComponent implements OnInit {
     toast.present();
   }
 
-  async mensajeModal(){
+  async mensajeModal(id_materia:string){
     const modal = await this.modalController.create({
       component: ChatadminComponent,
+      componentProps: { 
+        id_admin: this.ide_llego,
+        id_material: id_materia
+      }      
       
     });
 
