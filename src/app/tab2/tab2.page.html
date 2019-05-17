@@ -7,80 +7,82 @@
   </ion-header>
   
   <ion-content>
-    <ion-card class="rack">
-        <ion-card-title>Rack de Destino</ion-card-title>
-        <div class="spacer1"></div>
-  
-        <ion-row>
-            <ion-col size="9">
-                <ion-item>
-                    <ion-label position="stacked">N° de Rack</ion-label>
-                    <ion-input maxlength="4" [(ngModel)]="codigoRack">
-                        
-                    </ion-input>
-                  </ion-item>
-              
-            </ion-col>
-            <ion-col size="3">
-                <ion-button expand="full" class="botonFoto" (click)="scanCodeRack()">
-                    <ion-ripple-effect></ion-ripple-effect>
-                    <ion-icon name="camera"></ion-icon>
-                  </ion-button>
-              
-            </ion-col>
-          </ion-row>
-        
-      </ion-card>
-      <!--this one is ready to go-->
-      <ion-card>
-          <ion-button expand="full" class="botonSerie" (click)="scanCode()">
-              <ion-ripple-effect></ion-ripple-effect>
-              <ion-icon name="barcode"></ion-icon>
-               Escanear Producto
-            </ion-button>
-      
-      <ion-list>
-  
-          <ion-item-sliding #slidingItem  *ngFor="let serie of noSeries; index as i">
-              <ion-item>
-                <div class="divSerie">
-                  <span class="spanSerie">N° Serie: {{serie.seriem}}</span>
-                  <span class="spanEstado">Proveedor: {{serie.proveedro}}</span>
-                  <span class="spanEstado">Año de produccion: 20{{serie.anio}}</span>
-                  <span class="spanEstado">Codigo: {{serie.serie}}</span>
-                </div>
-              </ion-item>
-  
-              <ion-item-options side="end">
-                <button class="botonBorrar" ion-button color="danger" (click)="borrar(i)">
-                    <ion-icon class="iconoborrar" name="trash">
-                    </ion-icon>
-                </button>
-              </ion-item-options>
-            </ion-item-sliding>
-      </ion-list>
-    </ion-card>
-  </ion-content>
-  
-  <ion-footer>
-      <ion-toolbar>
-  
+      <ion-card class="rack">
+          <ion-card-title>Rack de Destino</ion-card-title>
+          <div class="spacer1"></div>
+    
           <ion-row>
-              <ion-col size="3">
-                  <ion-button color="warning" expand="full" (click)="cancelarChavos()">
-                      <ion-ripple-effect></ion-ripple-effect>
-                      <ion-icon name="close"></ion-icon>
-                      Cancelar
-                    </ion-button>
-              </ion-col>
               <ion-col size="9">
-                  <ion-button expand="full" (click)="guardarChido()">
+                  <ion-item>
+                      <ion-label position="stacked">N° de Rack</ion-label>
+                      <ion-input maxlength="4" [(ngModel)]="codigoRack">
+                          
+                      </ion-input>
+                    </ion-item>
+                
+              </ion-col>
+              <ion-col size="3">
+                  <ion-button expand="full" class="botonFoto" (click)="scanCodeRack()">
                       <ion-ripple-effect></ion-ripple-effect>
-                      <ion-icon name="git-pull-request"></ion-icon>
-                      Cambiar
+                      <ion-icon name="camera"></ion-icon>
                     </ion-button>
+                
               </ion-col>
             </ion-row>
-         
-      </ion-toolbar>
-    </ion-footer>
+          
+        </ion-card>
+        <!--this one is ready to go-->
+        <ion-card>
+            <ion-button expand="full" class="botonSerie" (click)="scanCode()">
+                <ion-ripple-effect></ion-ripple-effect>
+                <ion-icon name="barcode"></ion-icon>
+                 Escanear Producto
+              </ion-button>
+        
+        <ion-list>
+    
+            <ion-item-sliding #slidingItem  *ngFor="let serie of noSeries; index as i">
+                <ion-item>
+                  <div class="divSerie">
+                    <span class="spanSerie">N° Serie: {{serie.seriem}}</span>
+                    <span class="spanEstado">Proveedor: {{serie.proveedro}}</span>
+                    <span class="spanEstado">Año de produccion: 20{{serie.anio}}</span>
+                    <span class="spanEstado">Status: {{serie.estado}}</span>
+                    <span class="spanEstado">Codigo: {{serie.serie}}</span>
+                  </div>
+                </ion-item>
+    
+                <ion-item-options side="end">
+                  <button class="botonBorrar" ion-button color="danger" (click)="borrar(i)">
+                      <ion-icon class="iconoborrar" name="trash">
+                      </ion-icon>
+                  </button>
+                </ion-item-options>
+              </ion-item-sliding>
+        </ion-list>
+      </ion-card>
+    </ion-content>
+    
+    <ion-footer>
+        <ion-toolbar>
+    
+            <ion-row>
+                <ion-col size="3">
+                    <ion-button color="warning" expand="full" (click)="cancelarChavos()">
+                        <ion-ripple-effect></ion-ripple-effect>
+                        <ion-icon name="close"></ion-icon>
+                        Cancelar
+                      </ion-button>
+                </ion-col>
+                <ion-col size="9">
+                    <ion-button expand="full" (click)="guardarChido()">
+                        <ion-ripple-effect></ion-ripple-effect>
+                        <ion-icon name="checkmark"></ion-icon>
+                        Guardar
+                      </ion-button>
+                </ion-col>
+              </ion-row>
+           
+        </ion-toolbar>
+      </ion-footer>
+    

@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { BarcodeScanResult, BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
-import { ToastController, AlertController } from '@ionic/angular';
+import { ToastController, AlertController, Platform } from '@ionic/angular';
 import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { HttpService } from '../http.service';
 import { LoginPage } from '../login/login.page';
 import { TabsPage } from '../tabs/tabs.page';
+import { parse } from 'querystring';
 
 
 @Component({
@@ -30,6 +31,7 @@ export class Tab1Page implements OnInit{
   anioProduccion: string;
   noSerieProducto: string;
   arreglodeRack = [];
+  id_usuario: number;
   
 
   constructor(
@@ -37,7 +39,8 @@ export class Tab1Page implements OnInit{
       private toastCtrl: ToastController,
       private alertCtrl: AlertController,
       private http : HttpService,
-      public tabs : TabsPage
+      public tabs : TabsPage,
+      private platform: Platform
   ) { 
     this.noSeries = [];
     this.jsonDataLector = [];
@@ -49,8 +52,12 @@ export class Tab1Page implements OnInit{
     this.letracuatro = false;
     
     
-
-    console.log("Id desde el infierno" +this.tabs.regresaId());
+    this.id_usuario = parseInt(this.tabs.regresaId());
+    console.log(this.id_usuario);
+    if (this.id_usuario == NaN) {
+      alert("Favor de cerrar sesion y volver a Iniciar");
+      navigator['app'].exitApp();
+    }
     this.estado = "D";
   }
 
@@ -234,8 +241,8 @@ export class Tab1Page implements OnInit{
         if (resd == "NaN") {
           console.log(resd);
           console.log("Cuarta bien");
-        this.presentToast("Codigo Correcto","top","primary");
-        this.insertarProducto();
+        
+        this.juntarArreglo();
         //to go code
         }else{
           this.presentToast("Verifique cuarta letra de código","bottom","danger");
@@ -258,25 +265,50 @@ export class Tab1Page implements OnInit{
   
   juntarArreglo(){
     
+    if (this.id_usuario == NaN) {
+      console.log("Error");
+    }
+    console.log(this.noSeries.length);
         for(var i = 0; i < this.noSeries.length; i++){
           //console.log(this.noSeries[i].serie)
+          
 
           this.http.insertarProducto(
             this.noSeries[i].serie,
             this.codigoRack,
-            4,
+            this.id_usuario,
             this.noSeries[i].estado
           ).then((inv)=>{
+            
+            
+            var respuesta = inv["resultado"];
+            if(respuesta == "insertado"){
+              this.presentToast("Datos Insertados Correctamente", "middle", "success");
+            }else{
+              this.presentToast("Error en la Inserción", "middle", "danger");
+            }
+
+
+          },(error)=>{
+            this.presentToast("Error de conexión al servidor", "middle", "danger");
+          })
+
+          this.http.insertaraCambios(
+            this.noSeries[i].serie,
+            this.noSeries[i].estado,
+            this.id_usuario
+          ).then((inv)=>{
             console.log(inv);
+
+            
           },(error)=>{
             console.log("Error"+JSON.stringify(error));
           })
         }
+        this.cancelarChavos();
         
   }
 
-  insertarProducto(){
-    
-  }
+ 
 
 }

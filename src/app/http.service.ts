@@ -127,7 +127,6 @@ mostrarUtlimoCambio(){
 }
 insertarProducto(serie: string, noRack: string, idUsuario: number, status: string){
   var url = this.inicioURL+'insertarProducto/'+ serie+ '/' + noRack + '/' + idUsuario + '/' + status;
-  console.log(url);
   return new Promise((resolve, reject) => {
    this.http.get(url)
       .subscribe(data => {
@@ -141,7 +140,18 @@ insertarProducto(serie: string, noRack: string, idUsuario: number, status: strin
 
 insertaraCambios(id_producto: string, moviemiento: string, id_usuario: number){
   var url = this.inicioURL+'insertarCambios/'+ id_producto+ '/' + moviemiento + '/' + id_usuario;
-  console.log(url);
+  return new Promise((resolve, reject) => {
+   this.http.get(url)
+      .subscribe(data => {
+        resolve(data);
+       }, (err) =>{
+         reject(err);    
+       });
+  });
+}
+
+modificarLugardeRack(id_producto: string, noRack: string){
+  var url = this.inicioURL+'modificarPosicionProducto/'+ id_producto+ '/' + noRack;
   return new Promise((resolve, reject) => {
    this.http.get(url)
       .subscribe(data => {
