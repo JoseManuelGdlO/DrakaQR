@@ -33,11 +33,24 @@
         </ion-card>
         <!--this one is ready to go-->
         <ion-card>
-            <ion-button expand="full" class="botonSerie" (click)="scanCode()">
-                <ion-ripple-effect></ion-ripple-effect>
-                <ion-icon name="barcode"></ion-icon>
-                 Escanear Producto
-              </ion-button>
+            <ion-row>
+                <ion-col size="3">
+                    <ion-button expand="full" class="botonSerie" (click)="abrirAlerta()">
+                        <ion-ripple-effect></ion-ripple-effect>
+                        <ion-icon name="hand"></ion-icon>
+                         Manual 
+                      </ion-button>
+                  
+                </ion-col>
+                <ion-col size="9">
+                    <ion-button expand="full" class="botonSerie" (click)="scanCode()">
+                        <ion-ripple-effect></ion-ripple-effect>
+                        <ion-icon name="barcode"></ion-icon>
+                         Escanear Producto
+                      </ion-button>
+                  
+                </ion-col>
+              </ion-row>
         
         <ion-list>
     
@@ -47,7 +60,6 @@
                     <span class="spanSerie">N° Serie: {{serie.seriem}}</span>
                     <span class="spanEstado">Proveedor: {{serie.proveedro}}</span>
                     <span class="spanEstado">Año de produccion: 20{{serie.anio}}</span>
-                    <span class="spanEstado">Status: {{serie.estado}}</span>
                     <span class="spanEstado">Codigo: {{serie.serie}}</span>
                   </div>
                 </ion-item>
@@ -77,8 +89,8 @@
                 <ion-col size="9">
                     <ion-button expand="full" (click)="guardarChido()">
                         <ion-ripple-effect></ion-ripple-effect>
-                        <ion-icon name="checkmark"></ion-icon>
-                        Guardar
+                        <ion-icon name="pin"></ion-icon>
+                        Cambiar
                       </ion-button>
                 </ion-col>
               </ion-row>

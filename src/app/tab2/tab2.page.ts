@@ -28,6 +28,7 @@ export class Tab2Page implements OnInit{
   noSerieProducto: string;
   arreglodeRack = [];
   id_usuario: number;
+  noManual: string;
   
 
   constructor(
@@ -227,7 +228,7 @@ export class Tab2Page implements OnInit{
 
           this.http.insertaraCambios(
             this.noSeries[i].serie,
-            this.noSeries[i].estado,
+            "Disponible",
             this.id_usuario
           ).then((inv)=>{
             console.log(inv);
@@ -240,6 +241,41 @@ export class Tab2Page implements OnInit{
         this.cancelarChavos();
         
   }
+
+  async abrirAlerta(){
+    const alert = await this.alertCtrl.create({
+      header: 'Ingrese Numero de Serie a 19 digitos',
+      inputs: [
+        {
+          name: 'reserva',
+          type: 'text',
+          placeholder: 'Código'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            
+          }
+        }, {
+          text: 'Ok',
+          handler: data => {
+            this.noManual = data.reserva;
+            this.escanearRack(this.noManual);
+            console.log(this.noManual);
+            //this.presentToast(this.estado, 'top', 'primary');
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  
 
  
 

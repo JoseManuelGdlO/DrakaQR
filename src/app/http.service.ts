@@ -142,6 +142,9 @@ insertarProducto(serie: string, noRack: string, idUsuario: number, status: strin
 insertaraCambios(id_producto: string, moviemiento: string, id_usuario: number){
   var url = this.inicioURL+'insertarCambios/'+ id_producto+ '/' + moviemiento + '/' + id_usuario;
   console.log(url);
+  console.log("Desde provider 1:"+ id_producto);
+  console.log("Desde provider 1:" + moviemiento);
+  console.log("Desde provider 1:" + id_usuario);
   return new Promise((resolve, reject) => {
    this.http.get(url)
       .subscribe(data => {
@@ -154,6 +157,18 @@ insertaraCambios(id_producto: string, moviemiento: string, id_usuario: number){
 
 modificarLugardeRack(id_producto: string, noRack: string){
   var url = this.inicioURL+'modificarPosicionProducto/'+ id_producto+ '/' + noRack;
+  return new Promise((resolve, reject) => {
+   this.http.get(url)
+      .subscribe(data => {
+        resolve(data);
+       }, (err) =>{
+         reject(err);    
+       });
+  });
+}
+
+modificarStatusProducto(id_producto: string, status: string){
+  var url = this.inicioURL+'modificarEstatusProducto/'+ id_producto+ '/' + status;
   return new Promise((resolve, reject) => {
    this.http.get(url)
       .subscribe(data => {

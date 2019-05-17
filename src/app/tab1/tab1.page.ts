@@ -298,7 +298,7 @@ export class Tab1Page implements OnInit{
           })
 
           this.http.insertaraCambios(
-            this.dato,
+            this.noSeries[i].serie,
             this.noSeries[i].estado,
             this.id_usuario
           ).then((inv)=>{

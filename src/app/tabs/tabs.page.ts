@@ -24,8 +24,13 @@ export class TabsPage{
 
         this.id = this.router.getCurrentNavigation().extras.state.id_usuario;
         console.log("ID USUARIO  "+this.id);
+        if (this.id.isNaN()) {
+          alert("Favor de cerrar sesion y volver a Iniciar");
+          navigator['app'].exitApp();
+        }
       }
     });
+    
   }
 
   mnss(){

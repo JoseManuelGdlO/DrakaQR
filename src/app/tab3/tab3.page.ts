@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, ToastController, AlertController } from '@ionic/angular';
 import { delay, async } from 'q';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+import { TabsPage } from '../tabs/tabs.page';
+import { HttpService } from '../http.service';
 
 @Component({
   selector: 'app-tab3',
@@ -19,15 +21,27 @@ export class Tab3Page implements OnInit{
   proveedor: string;
   anioProduccion: string;
   noSerieProducto: string;
+  id_usuario: number;
+  noManual: string;
 
   constructor(
     private loadingCtrl: LoadingController,
-    private barcodeScanner: BarcodeScanner
+    private barcodeScanner: BarcodeScanner,
+    private toastCtrl: ToastController,
+    public tabs : TabsPage,
+    private http : HttpService,
+    private alertCtrl : AlertController
   ) { 
 
     this.idCard = 0;
     this.noSeries = [];
     this.estado = "D";
+    this.id_usuario = parseInt(this.tabs.regresaId());
+    console.log(this.id_usuario);
+    if (this.id_usuario == NaN) {
+      alert("Favor de cerrar sesion y volver a Iniciar");
+      navigator['app'].exitApp();
+    }
   }
 
   ngOnInit() {
@@ -73,7 +87,7 @@ export class Tab3Page implements OnInit{
     this.noSeries.push({
       id_card: this.idCard , 
       serie: codigo, 
-      estado: "Baja",
+      estado: "Scrap",
       proveedro: this.proveedor,
       anio: this.anioProduccion,
       seriem: this.noSerieProducto
@@ -106,4 +120,95 @@ export class Tab3Page implements OnInit{
   cancelarChavos(){
     this.noSeries = [];
   }
+
+  
+  
+  juntarArreglo(){
+    
+    if (this.id_usuario == NaN) {
+      console.log("Error");
+    }
+    console.log(this.noSeries.length);
+        for(var i = 0; i < this.noSeries.length; i++){
+          //console.log(this.noSeries[i].serie)
+          
+
+          this.http.modificarStatusProducto(
+            this.noSeries[i].serie,
+            "Baja"
+          ).then((inv)=>{
+            
+            console.log(inv);
+            var respuesta = inv["id_producto"];
+
+            if(respuesta != NaN){
+              this.presentToast("Datos Insertados Correctamente", "middle", "success");
+            }else{
+              this.presentToast("Error en la Inserción", "middle", "danger");
+            }
+          },(error)=>{
+            this.presentToast("Error de conexión al servidor", "middle", "danger");
+          })
+
+          this.http.insertaraCambios(
+            this.noSeries[i].serie,
+            this.noSeries[i].estado,
+            this.id_usuario
+          ).then((inv)=>{
+      
+            console.log(inv);
+      
+          },(error)=>{
+            console.log("Error"+JSON.stringify(error));
+          })
+          
+        }
+        this.cancelarChavos();
+        
+  }
+
+  async presentToast(mensaje : string, pos: any, color: string) {
+    const toast = await this.toastCtrl.create({
+      message : mensaje,
+      position : pos,
+      duration : 2000,
+      color: color
+    });
+    toast.present();
+    
+  }
+
+  async abrirAlerta(){
+    const alert = await this.alertCtrl.create({
+      header: 'Ingrese Numero de Serie a 19 digitos',
+      inputs: [
+        {
+          name: 'reserva',
+          type: 'text',
+          placeholder: 'Código'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            
+          }
+        }, {
+          text: 'Ok',
+          handler: data => {
+            this.noManual = data.reserva;
+            this.escanearRack(this.noManual);
+            console.log(this.noManual);
+            //this.presentToast(this.estado, 'top', 'primary');
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
 }
