@@ -145,8 +145,15 @@ export class AdminPage implements OnInit {
     this.http.buscaRack(this.codigoRack).then(
       async (data) => { 
         console.log(data); 
+
+        if(data ==  null){
+          this.presentError();
+
+        }else{
+          this.presentRack(data['almacen'],data['pasillo'], data['rack']);
+        }
        
-        this.presentRack(data['almacen'],data['pasillo'], data['rack']);
+        
 
 
   
@@ -167,6 +174,17 @@ export class AdminPage implements OnInit {
       header: 'Posicion',
       subHeader: 'Rack '+rack,
       message: 'Se encuentra en el Almacen '+almacen+' en el pasillo '+pasillo,
+      buttons: ['OK']
+    });
+
+    await alert.present();
+  }
+
+  async presentError() {
+    const alert = await this.alertController.create({
+      header: 'Posicion',
+      subHeader: 'ERROR',
+      message: 'No se encuentra el elemento que buscas',
       buttons: ['OK']
     });
 
@@ -194,9 +212,13 @@ export class AdminPage implements OnInit {
         console.log(data); 
        
         
+        if(data ==  null){
+          this.presentError();
 
+        }else{
 
         this.presentProd(data['almacen'],data['pasillo'], data['rack'], data['serie']);
+        }
   
        
       },

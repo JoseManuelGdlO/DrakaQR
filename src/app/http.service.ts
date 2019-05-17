@@ -230,5 +230,18 @@ buscaProd(serie:string){
 
 }
 
+eliminarAlmacen(rack:any){
+  var url = this.inicioURL+'eliminarAlmacen/'+rack;
+  return new Promise((resolve, reject) => {
+   this.http.get(url)
+      .subscribe(data => {
+        resolve(data);
+       }, (err) =>{
+         reject(err);    
+       });
+  });
+
+}
+
 
 }

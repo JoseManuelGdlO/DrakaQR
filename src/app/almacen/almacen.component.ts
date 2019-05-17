@@ -132,4 +132,59 @@ export class AlmacenComponent implements OnInit {
     toast.present();
   }
 
+  eliminrItem(rack:any){
+
+    this.http.eliminarAlmacen(rack).then(
+      async (data) => { 
+        console.log(data); 
+        this.result = data;
+  
+        if(this.result.estado== "eliminado"){
+
+          this.incorrectoToast("El Rack ha sido Eliminado Exitosamente");
+          this.mostrarDatos();
+        }else{
+
+          this.incorrectoToast("Ocurrio un error en el proceso");
+
+        }
+       
+  
+  
+       
+      },
+      async (error) =>{
+        console.log("Error"+JSON.stringify(error));
+       
+      }
+    );
+
+  }
+
+  async presentAlertConfirm(rack:any) {
+    const alert = await this.alertController.create({
+      header: 'Estas Seguro',
+      message: 'Esta accion es irreversible',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Acepto',
+          handler: () => {
+            console.log('Confirm Okay');
+            this.eliminrItem(rack);
+
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
 }

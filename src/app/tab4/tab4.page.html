@@ -1,9 +1,23 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>tab4</ion-title>
+    <ion-title>Log del Usuario</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+    <ion-list>
+        <ion-card *ngFor="let item of logs">
+            <ion-card-header>
+              <ion-card-subtitle color="primary">Producto {{item.serie}}</ion-card-subtitle>
+              <ion-card-title>{{item.movimiento}}</ion-card-title>
+            </ion-card-header>
+          
+            <ion-card-content>
+              El producto {{item.serie}} fue dado de {{item.movimiento}} del rack {{item.no_rack}} la fecha {{item.fecha_cambio}}
+              su estatus ahora es {{item.estatus}}
+            </ion-card-content>
+          </ion-card>
+          
+    </ion-list>
+  
 </ion-content>
