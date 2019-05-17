@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-tabs',
@@ -13,6 +14,7 @@ export class TabsPage{
   constructor(
     public router: Router,
     public route: ActivatedRoute,
+    public alertCtrl: AlertController
   ){
     this.route.queryParams.subscribe(params => {
       if (this.router.getCurrentNavigation().extras.state) {
@@ -22,15 +24,40 @@ export class TabsPage{
         console.log("ID USUARIO  "+this.id);
       }
     });
-
   }
 
   mnss(){
-    this.router.navigateByUrl('mensajes');
+    this.router.navigateByUrl('mensajes/'+this.id);
+    
   }
 
   public regresaId(){
     return this.id
   }
   
+  async salir(){
+    
+    const alert = await this.alertCtrl.create({
+      header: 'Porfavor confirme!',
+      message: 'Cerrar Sesion',
+      buttons: [
+        {
+          text: 'No',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Salir',
+          handler: () => {
+            this.router.navigateByUrl('');
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
 }

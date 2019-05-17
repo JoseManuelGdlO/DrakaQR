@@ -4,7 +4,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   /*{ path: '', loadChildren: './tabs/tabs.module#TabsPageModule' },
   { path: 'informacion', loadChildren: './informacion/informacion.module#InformacionPageModule' },
-  { path: 'mensajes', loadChildren: './mensajes/mensajes.module#MensajesPageModule' }*/
+  */
 
   {
     path: '',
@@ -17,6 +17,10 @@ const routes: Routes = [
   {
      path: 'admin', 
      loadChildren: './admin/admin.module#AdminPageModule' 
+  },
+  { 
+     path: 'mensajes/:id', 
+     loadChildren: './mensajes/mensajes.module#MensajesPageModule' 
   }
   
   /*{ path: '', redirectTo: 'tabs', pathMatch: 'full' },

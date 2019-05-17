@@ -9,4 +9,55 @@
 
 <ion-content>
 
+
+      <ion-list>
+
+        <div  *ngFor="let item of datos" >
+
+          <div *ngIf="item.id_usuario == 2; else elseBlock">
+
+            <div style="text-align: right;">
+              <ion-card style="width: 40%; margin-left: 50%" color="primary">
+           
+                   <h5 style="padding: 2vw; font-size: 4vw;">{{item.mensaje}}</h5>
+             </ion-card>
+            </div>
+
+          </div>
+
+
+
+          <ng-template #elseBlock>
+              <div style="text-align: left;">
+                  <ion-card style="width: 40%; margin-right: 50%;">
+               
+                       <h5 style="padding: 2vw; font-size: 4vw;">{{item.mensaje}}</h5>
+                 </ion-card>
+                </div>
+          </ng-template>
+
+        </div>
+        
+      </ion-list>
+
+      
+    
+
 </ion-content>
+
+<ion-footer >
+  <ion-toolbar color="primary">
+    <ion-grid style="padding: 0px;">
+      <ion-row>
+        <ion-col size="9">
+            <ion-input [(ngModel)]="mensaje" placeholder="Ej. Revisa el Rack s33s"></ion-input>
+        </ion-col>
+        <ion-col>
+         <ion-button (click)="enviarMensaje()" color="light">
+            <ion-icon color="primary" name="send"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+      </ion-grid>
+  </ion-toolbar>
+</ion-footer>

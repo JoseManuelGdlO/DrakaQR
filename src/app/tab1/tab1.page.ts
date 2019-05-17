@@ -32,7 +32,9 @@ export class Tab1Page implements OnInit{
   noSerieProducto: string;
   arreglodeRack = [];
   id_usuario: number;
-  
+  dato: any;
+  id_prod: any;
+  noManual: string;
 
   constructor(
       private barcodeScanner: BarcodeScanner,
@@ -280,35 +282,118 @@ export class Tab1Page implements OnInit{
             this.noSeries[i].estado
           ).then((inv)=>{
             
-            
-            var respuesta = inv["resultado"];
-            if(respuesta == "insertado"){
+            console.log(inv);
+            var respuesta = inv["id_producto"];
+            this.dato = inv["id_producto"];
+            //this.dato = inv;
+            //this.id_prod = this.dato.id_producto;
+            //console.log("dato" + this.id_prod);
+            if(respuesta != NaN){
               this.presentToast("Datos Insertados Correctamente", "middle", "success");
             }else{
               this.presentToast("Error en la Inserción", "middle", "danger");
             }
-
-
           },(error)=>{
             this.presentToast("Error de conexión al servidor", "middle", "danger");
           })
 
           this.http.insertaraCambios(
-            this.noSeries[i].serie,
+            this.id_prod,
             this.noSeries[i].estado,
             this.id_usuario
           ).then((inv)=>{
+      
             console.log(inv);
-
+      
             
           },(error)=>{
             console.log("Error"+JSON.stringify(error));
           })
+          
         }
         this.cancelarChavos();
         
   }
 
+  
+
  
+  async abrirAlerta(){
+    const alert = await this.alertCtrl.create({
+      header: 'Ingrese Numero de Serie a 19 digitos',
+      inputs: [
+        {
+          name: 'reserva',
+          type: 'text',
+          placeholder: 'Código'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            
+          }
+        }, {
+          text: 'Ok',
+          handler: data => {
+            this.noManual = data.reserva;
+            this.presentAlertRadioDos(this.noManual);
+            console.log(this.noManual);
+            //this.presentToast(this.estado, 'top', 'primary');
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  async presentAlertRadioDos(noSerie : string) {
+    const alert = await this.alertCtrl.create({
+      header: 'Estado del Producto',
+      inputs: [
+        {
+          name: 'radio1',
+          type: 'radio',
+          label: 'Aprobado',
+          value: 'D',
+          checked: true
+        },
+        {
+          name: 'radio2',
+          type: 'radio',
+          label: 'Detenido',
+          value: 'Q'
+        },
+        {
+          name: 'radio3',
+          type: 'radio',
+          label: 'Scrap',
+          value: 'S'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirm Cancel');
+          }
+        }, {
+          text: 'Agregar',
+          handler: (data:string) => {
+            this.estado = data;
+            console.log(this.estado);
+            this.escanearRack(noSerie, this.estado);
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
 
 }
