@@ -116,7 +116,7 @@ export class AdminPage implements OnInit {
     this.storage.set('USER', '');
     this.storage.set('CONTRA', '');
 
-    this.router.navigate(['login']);
+    this.router.navigate(['']);
 
   }
 
