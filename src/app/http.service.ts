@@ -202,4 +202,31 @@ traerLogUsuario(id:any){
 }
 
 
+buscaRack(codigoRack:string){
+  var url = this.inicioURL+'buscarRack/'+codigoRack;
+  return new Promise((resolve, reject) => {
+   this.http.get(url)
+      .subscribe(data => {
+        resolve(data);
+       }, (err) =>{
+         reject(err);    
+       });
+  });
+
+}
+
+buscaProd(serie:string){
+  var url = this.inicioURL+'mostrarUbicacionProducto/'+serie;
+  return new Promise((resolve, reject) => {
+   this.http.get(url)
+      .subscribe(data => {
+        resolve(data);
+       }, (err) =>{
+         reject(err);    
+       });
+  });
+
+}
+
+
 }

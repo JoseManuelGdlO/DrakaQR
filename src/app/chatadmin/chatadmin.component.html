@@ -2,20 +2,23 @@
 
 <ion-content>
 
-    <ion-fab vertical="top" horizontal="end" slot="fixed">
+    <ion-fab vertical="bottom" horizontal="start" slot="fixed">
         <ion-fab-button color="danger" (click)="cerrarModal()" >
           <ion-icon name="md-close"></ion-icon>
         </ion-fab-button>
       </ion-fab>
 
+      <div style="text-align: center;">
+          <p>Ultimo Log: <b>{{noticias}}</b> del rack <b>{{rack}}</b></p>
+        </div>
       <ion-list>
 
         <div  *ngFor="let item of datos" >
 
-          <div *ngIf="item.id_usuario == id_usuario; else elseBlock">
+          <div *ngIf="item.id_usuario == 5; else elseBlock">
 
             <div style="text-align: right;">
-              <ion-card style="width: 40%; margin-left: 50%" color="primary">
+              <ion-card style="width: 60%; margin-left: 40%" color="primary">
            
                    <h5 style="padding: 2vw; font-size: 4vw;">{{item.mensaje}}</h5>
              </ion-card>
@@ -27,7 +30,7 @@
 
           <ng-template #elseBlock>
               <div style="text-align: left;">
-                  <ion-card style="width: 40%; margin-right: 50%;">
+                  <ion-card style="width: 60%; margin-right: 40%;">
                
                        <h5 style="padding: 2vw; font-size: 4vw;">{{item.mensaje}}</h5>
                  </ion-card>

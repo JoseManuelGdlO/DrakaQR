@@ -19,42 +19,65 @@
           </ion-fab-list>
       </ion-fab>
 
-      <div class="row"> 
-        <div class="column">
-            <ion-card>
-                <ion-card-header>
-                  <ion-card-title>Total</ion-card-title>
-                  <ion-card-subtitle style="color:rgb(80, 152, 247); font-size: 15vw;">10</ion-card-subtitle>
-                </ion-card-header>
-              
-                <ion-card-content>
-                  Productos en los almacenes
-                </ion-card-content>
-              </ion-card>
-        </div>
-        <div class="column">
-            <ion-card>
-                <ion-card-header>
-                  <ion-card-title>Almacen</ion-card-title>
-                  <ion-card-subtitle style="color:rgb(80, 152, 247); font-size: 15vw;">3</ion-card-subtitle>
-                </ion-card-header>
-              
-                <ion-card-content>
-                 es el mas lleno con 25 productos
-                </ion-card-content>
-              </ion-card>
-        </div>
-      </div>
+     
+<div style="text-align: center; background-color: rgba(0, 0, 0, 0.322)">
+      <ion-row>
+          <ion-col size="9">
+              <ion-item>
+                  <ion-label position="stacked">N° de Rack</ion-label>
+                  <ion-input maxlength="4" placeholder="Ej.a44R" [(ngModel)]="codigoRack">
+                      
+                  </ion-input>
+                </ion-item>
+            
+          </ion-col>
+          <ion-col size="3">
+              <ion-button  expand="full" (click)="scanCodeRack()">
+                  <ion-ripple-effect></ion-ripple-effect>
+                  <ion-icon name="camera"></ion-icon>
+                </ion-button>
+            
+          </ion-col>
+        </ion-row>
 
-      
+        <ion-button  expand="full" (click)="buscarRack()">Buscar Posicion del Rack
+            <ion-ripple-effect></ion-ripple-effect>
+          </ion-button>
+
+</div>
 
 
+<div style="text-align: center; background-color: rgba(0, 0, 255, 0.322)">
+    <ion-row>
+        <ion-col size="9">
+            <ion-item>
+                <ion-label position="stacked">N° de Producto</ion-label>
+                <ion-input placeholder="Ej.S293182819234233" [(ngModel)]="codigoProducto">
+                    
+                </ion-input>
+              </ion-item>
+          
+        </ion-col>
+        <ion-col size="3">
+            <ion-button expand="full" (click)="scanCodeProd()">
+                <ion-ripple-effect></ion-ripple-effect>
+                <ion-icon name="camera"></ion-icon>
+              </ion-button>
+          
+        </ion-col>
+      </ion-row>
+
+      <ion-button expand="full" (click)="buscarProd()">Buscar Posicion del Producto
+          <ion-ripple-effect></ion-ripple-effect>
+        </ion-button>
+
+</div>
 
 
 </ion-content>
 
 <ion-footer>
-    <ion-toolbar color="primary">
+    <ion-toolbar (click)="mandarChat()" color="primary">
       <div style="text-align: center;">
         <p>{{noticias}} del rack <b>{{rack}}</b></p>
         <p>Ingeniero: {{nombre}}</p>
