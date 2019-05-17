@@ -26,6 +26,7 @@ export class ChatadminComponent implements OnInit {
       this.id_material = this.navParams.get('id_material');
 
 
+      this.traerLogs();
       this.crearConversacion();
       this.traerConversacion();
 
@@ -67,7 +68,7 @@ export class ChatadminComponent implements OnInit {
   traerConversacion(){
     this.http.mostrarConversacion(this.id_usuario,this.id_material).then(
       async (data) => { 
-       // console.log(data) ; 
+       //console.log(data) ; 
   
         this.datos = data;
        
@@ -98,6 +99,30 @@ export class ChatadminComponent implements OnInit {
        
       }
     );
+  }
+
+
+  noticias:any;
+  rack:any;
+  traerLogs(){
+
+    this.http.traerLogUsuario(this.id_material).then(
+      async (data) => { 
+        console.log(data) ; 
+  
+        var json = data;
+
+        this.noticias = json[0].movimiento;
+        this.rack = json[0].no_rack;
+
+       
+      },
+      async (error) =>{
+        console.log("Error"+JSON.stringify(error));
+       
+      }
+    );
+
   }
 
 }
