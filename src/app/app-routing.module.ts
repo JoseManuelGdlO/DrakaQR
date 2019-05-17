@@ -13,6 +13,10 @@ const routes: Routes = [
   {
     path: 'app',
     loadChildren: './tabs/tabs.module#TabsPageModule'
+  },
+  {
+     path: 'admin', 
+     loadChildren: './admin/admin.module#AdminPageModule' 
   }
   
   /*{ path: '', redirectTo: 'tabs', pathMatch: 'full' },
