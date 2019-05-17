@@ -28,7 +28,6 @@ export class TabsPage{
 
   mnss(){
     this.router.navigateByUrl('mensajes/'+this.id);
-    
   }
 
   public regresaId(){

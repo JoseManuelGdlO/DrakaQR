@@ -298,14 +298,13 @@ export class Tab1Page implements OnInit{
           })
 
           this.http.insertaraCambios(
-            this.id_prod,
+            this.dato,
             this.noSeries[i].estado,
             this.id_usuario
           ).then((inv)=>{
       
             console.log(inv);
       
-            
           },(error)=>{
             console.log("Error"+JSON.stringify(error));
           })
