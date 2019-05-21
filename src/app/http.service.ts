@@ -7,10 +7,12 @@ import { HttpClient } from '@angular/common/http';
 })
 export class HttpService {
 
-  inicioURL:string = "http://draka.avisositd.xyz/";
+  inicioURL:string = "http://draka.avisositd.xyz/"; //url del host laravel
 
   constructor(public http: HttpClient) { }
 
+
+  //metodo get para enviar la informacion del usuario y la contraseña
   login(usuario:string, contra:string){
  
     //alert(usuario+contra);
@@ -26,6 +28,7 @@ export class HttpService {
    });
   }
 
+  //metodo para mostrar todos los usuarios
   mostrar(){
  
     //alert(usuario+contra);
@@ -40,7 +43,7 @@ export class HttpService {
         });
    });
   }
-
+//metodo para mostrar el almacen
   mostrarAlmacen(){
  
     //alert(usuario+contra);
@@ -56,7 +59,7 @@ export class HttpService {
    });
   }
 
-
+//se carga la conversacion dependiendo de los usarios que la soliciten
   mostrarConversacion(uno:string,dos:string){
  
     //alert(usuario+contra);
@@ -71,7 +74,7 @@ export class HttpService {
         });
    });
   }
-
+//metodo get para acutalizar informacion de usuario
 actualizarUsuario(data:any, id:string){
 
   var url = this.inicioURL+'actualizarUsuario/'+data.nombreCompleto+'/'+data.usuario+'/'+data.contra+'/2/'+id;
@@ -86,6 +89,7 @@ actualizarUsuario(data:any, id:string){
 
 }
 
+//metodo para agregar un rack a la base de datos
 agregarRack(data:any){
 
   var url = this.inicioURL+'insertarAlmacen/'+data.almacen+'/'+data.rack+'/'+data.pasillo+'/'+data.cantidad
@@ -99,6 +103,8 @@ agregarRack(data:any){
   });
 
 }
+
+//fucnion para elimiar usuario ya registrado
 
 eliminarUsuario(id:string){
 
@@ -114,6 +120,7 @@ eliminarUsuario(id:string){
 
 }
 
+//metodo para mostrar el ultimo cambio
 mostrarUtlimoCambio(){
   var url = this.inicioURL+'mostrarUltimoCambio';
   return new Promise((resolve, reject) => {
@@ -125,6 +132,7 @@ mostrarUtlimoCambio(){
        });
   });
 }
+//se inserta producto en la base de datos
 insertarProducto(serie: string, noRack: string, idUsuario: number, status: string){
   var url = this.inicioURL+'insertarProducto/'+ serie+ '/' + noRack + '/' + idUsuario + '/' + status;
   console.log(url);
@@ -138,6 +146,7 @@ insertarProducto(serie: string, noRack: string, idUsuario: number, status: strin
   });
 }
 
+//se hace al mismo momento la insercion del producto
 
 insertaraCambios(id_producto: string, moviemiento: string, id_usuario: number){
   var url = this.inicioURL+'insertarCambios/'+ id_producto+ '/' + moviemiento + '/' + id_usuario;
@@ -154,7 +163,7 @@ insertaraCambios(id_producto: string, moviemiento: string, id_usuario: number){
        });
   });
 }
-
+//se modifica el lugar del rack
 modificarLugardeRack(id_producto: string, noRack: string){
   var url = this.inicioURL+'modificarPosicionProducto/'+ id_producto+ '/' + noRack;
   return new Promise((resolve, reject) => {
@@ -166,7 +175,7 @@ modificarLugardeRack(id_producto: string, noRack: string){
        });
   });
 }
-
+//modificar el estatus del producto
 modificarStatusProducto(id_producto: string, status: string){
   var url = this.inicioURL+'modificarEstatusProducto/'+ id_producto+ '/' + status;
   return new Promise((resolve, reject) => {
@@ -179,6 +188,7 @@ modificarStatusProducto(id_producto: string, status: string){
   });
 }
 
+//enviar mensajes 
 enviarMensaje(id_conversacion:string,id_usuario:string, mensaje:string){
 
   var url = this.inicioURL+'insertarMensaje/'+id_conversacion+'/'+id_usuario+'/'+mensaje;
@@ -193,6 +203,7 @@ enviarMensaje(id_conversacion:string,id_usuario:string, mensaje:string){
   });
 }
 
+//crear la conversacion
 crearConversacion(id_usuario_uno,id_material){
   var url = this.inicioURL+'insertarConversacion/'+id_usuario_uno+'/'+id_material;
   return new Promise((resolve, reject) => {
@@ -205,7 +216,7 @@ crearConversacion(id_usuario_uno,id_material){
   });
 }
 
-
+//traer la tala de registros por trabajador
 traerLogUsuario(id:any){
   var url = this.inicioURL+'mostrarCambioID/'+id;
   return new Promise((resolve, reject) => {
@@ -218,7 +229,7 @@ traerLogUsuario(id:any){
   });
 }
 
-
+//busca el rack
 buscaRack(codigoRack:string){
   var url = this.inicioURL+'buscarRack/'+codigoRack;
   return new Promise((resolve, reject) => {
@@ -232,6 +243,7 @@ buscaRack(codigoRack:string){
 
 }
 
+//busca el producto
 buscaProd(serie:string){
   var url = this.inicioURL+'mostrarUbicacionProducto/'+serie;
   return new Promise((resolve, reject) => {
@@ -245,6 +257,8 @@ buscaProd(serie:string){
 
 }
 
+
+//elimina un almacen
 eliminarAlmacen(rack:any){
   var url = this.inicioURL+'eliminarAlmacen/'+rack;
   return new Promise((resolve, reject) => {
@@ -258,6 +272,7 @@ eliminarAlmacen(rack:any){
 
 }
 
+//agrega un usuario
 agregarUsuario(data){
 
   var url = this.inicioURL+'insertarUsuario/'+data.nombreCompleto+'/'+data.usuario+'/'+data.contra+'/2';

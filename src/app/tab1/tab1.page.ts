@@ -67,7 +67,7 @@ export class Tab1Page implements OnInit{
 
   ngOnInit() {
   }
-  //metodo generico para hacer aparecer un toast, se le mandan el mensjae, la posicion y la posicion
+  //metodo generico para hacer aparecer un toast, se le mandan el mensjae, la posicion y la el color
   async presentToast(mensaje : string, pos: any, color: string) {
     const toast = await this.toastCtrl.create({
       message : mensaje,
@@ -79,15 +79,16 @@ export class Tab1Page implements OnInit{
     
   }
   
+  //se escanea el PRODUCTO (no el rack) y su estado
   escanearRack(codigo: string, estate: any){
     
-    var estadou = "Disponible";
+    var estadou = "Disponible"; // se crea una variable local con un valor predeterminado de disponible
 
-    if (estate == "D") {
+    if (estate == "D") { //si llega D se deja el estado -disponible
       var estadou = "Disponible";
-    }else if (estate == "Q") {
+     }else if (estate == "Q") { //si llega D se deja el estado -disponible
       var estadou = "Retenido";
-    }else if (estate == "S") {
+    }else if (estate == "S") { //si llega D se deja el estado -disponible
       var estadou = "Scrap";
     }
     //se sca el primera valor del codigo S
@@ -127,7 +128,7 @@ export class Tab1Page implements OnInit{
         console.log("Error", err);
       });
   }
-//para pruebas
+//codigo para pruebas
   escanearRacktest(){
     this.idCard = this.idCard + 1;
     this.noSeries.push({
@@ -140,7 +141,7 @@ export class Tab1Page implements OnInit{
     })
   }
   //S300056819005519321 
-//metodo para prueba
+//metodo que borra el card que a la que se le haga el slidding
   borrar(idSerie: number){
     this.noSeries.splice(idSerie,1);
     console.log(this.noSeries);
@@ -219,43 +220,47 @@ export class Tab1Page implements OnInit{
   }
   //la fucnion escanearRack valida el formato axxa (letra, numero, numero, letra)
   //asi como la longitud minima y maxima de la cadena
+  //se manda a llamar cuando se presiona el boton de guardar
   guardarChido(){
-    if (!this.codigoRack) {
+    if (!this.codigoRack) {//se valida que exista la cadena
       this.presentToast("Ingrese un codigo de Rack","bottom", "danger");
-    }else if (this.codigoRack.length < 4) {
+    }else if (this.codigoRack.length < 4) {//valida que la longitud no se amenor a 4
       this.presentToast("El codigo debe ser de 4 digitos", "bottom", "danger");
       
-    }else if (this.codigoRack.length > 4) {
+    }else if (this.codigoRack.length > 4) {//valida que la longitud no sea mayor a 4
       this.presentToast("Longitud de codigo de Rack es mayor a 4", "bottom", "danger");
-    } else if (this.codigoRack.length==4) {
-      var str = new String(this.codigoRack);
-      var res = str.charAt(0)
-      var number = parseInt(res);
-      var resd = new String(number);
+    } else if (this.codigoRack.length==4) {// si la longitud es de 4 digitos entra a la siguiente condificon
+      var str = new String(this.codigoRack);//se guarda la cadena en una variable
+      var res = str.charAt(0)//se selecciona el primer caracter y se guarda en res
+      var number = parseInt(res); //se le hace un parseInt para convertir lo que sale en un numero en vez de una cadena
+      var resd = new String(number); //se vuelve a convertir el nuemro pero ahora a cadena
       
+      //esot arrojara dos posbles resultados de tipo NaN (Not a Number)
+      //si el primer caracter de el caracter es un NaN significa que se trata de una letra
+      //si la cadena es diferente de NaN entonces el caracter es un numero
       if 
-        (resd == "NaN") {
+        (resd == "NaN") {//se valida el primer caracter de la cadena
         this.letrauno = true;
         
-        var res = str.charAt(1);
+        var res = str.charAt(1); //se guarda el segundo caracter para repetir la misma operacion
         var number = parseInt(res);
         var resd = new String(number);
         
-        if (resd != "NaN") {
-        var res = str.charAt(2);
+        if (resd != "NaN") {//validamos el segundo caracter
+        var res = str.charAt(2); 
         var number = parseInt(res);
         var resd = new String(number);
 
-        if (resd != "NaN") {
-        var res = str.charAt(3);
+        if (resd != "NaN") {//validamos el tercero caracter
+        var res = str.charAt(3); 
         var number = parseInt(res);
         var resd = new String(number);
 
-        if (resd == "NaN") {
+        if (resd == "NaN") {//validamos el cuarto caracter
           console.log(resd);
           console.log("Cuarta bien");
         
-        this.juntarArreglo();
+        this.juntarArreglo();//una vez validados todos los caracteres se manda a llamar la funcion jutnar arreglo
         //to go code
         }else{
           this.presentToast("Verifique cuarta letra de código","bottom","danger");
@@ -286,7 +291,7 @@ export class Tab1Page implements OnInit{
           //console.log(this.noSeries[i].serie)
           
 //se hace la insercion en la tabla de productos
-          this.http.insertarProducto(
+          this.http.insertarProducto(//se inyecta la dependecia
             this.noSeries[i].serie,
             this.codigoRack,
             this.id_usuario,
@@ -294,21 +299,21 @@ export class Tab1Page implements OnInit{
           ).then((inv)=>{
             
             console.log(inv);
-            var respuesta = inv["id_producto"];
-            this.dato = inv["id_producto"];
+            var respuesta = inv["id_producto"];// se recive mensaje de bd y se guarda en respuesta
+            this.dato = inv["id_producto"];//tambien se guarda en una variable global
             //this.dato = inv;
             //this.id_prod = this.dato.id_producto;
             //console.log("dato" + this.id_prod);
-            if(respuesta != NaN){
+            if(respuesta != NaN){// si la respuesta no es NaN lo que significa que es un numero significa que es correcto
               this.presentToast("Datos Insertados Correctamente", "middle", "success");
             }else{
-              this.presentToast("Error en la Inserción", "middle", "danger");
+              this.presentToast("Error en la Inserción", "middle", "danger");// si no se presenta error
             }
           },(error)=>{
-            this.presentToast("Error de conexión al servidor", "middle", "danger");
+            this.presentToast("Error de conexión al servidor", "middle", "danger");// en caso de que falle el internet o la conexion tambien se manda alert
           })
 //se hace la insercion en la tabla de cambios
-          this.http.insertaraCambios(
+          this.http.insertaraCambios(//se inyecta la dependencia
             this.noSeries[i].serie,
             this.noSeries[i].estado,
             this.id_usuario
@@ -349,8 +354,8 @@ export class Tab1Page implements OnInit{
         }, {
           text: 'Ok',
           handler: data => {
-            this.noManual = data.reserva;
-            this.presentAlertRadioDos(this.noManual);
+            this.noManual = data.reserva;// se guarda la repsuesta del alerCtrl en una varibale
+            this.presentAlertRadioDos(this.noManual);//se manda a llamar funcion presentAlert para elegir el estado del rpoducto
             console.log(this.noManual);
             //this.presentToast(this.estado, 'top', 'primary');
           }
@@ -398,7 +403,7 @@ export class Tab1Page implements OnInit{
           handler: (data:string) => {
             this.estado = data;
             console.log(this.estado);
-            this.escanearRack(noSerie, this.estado);
+            this.escanearRack(noSerie, this.estado);//una bvez obtenido el resultado se sunta en el arreglos
           }
         }
       ]

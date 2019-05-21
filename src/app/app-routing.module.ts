@@ -7,31 +7,23 @@ const routes: Routes = [
   */
 
   {
-    path: '',
+    path: '',// se inicia la sesion en '', que carga el login
     loadChildren: './login/login.module#LoginPageModule'
   },
   {
-    path: 'app',
+    path: 'app',//ruta para las tabs
     loadChildren: './tabs/tabs.module#TabsPageModule'
   },
   {
-     path: 'admin', 
+     path: 'admin', // ruta para la parte del administrador
      loadChildren: './admin/admin.module#AdminPageModule' 
   },
   { 
-     path: 'mensajes/:id', 
+     path: 'mensajes/:id', //ruta para los mensajes
      loadChildren: './mensajes/mensajes.module#MensajesPageModule' 
   }
   
-  /*{ path: '', redirectTo: 'tabs', pathMatch: 'full' },
-  { path: 'home', loadChildren: './home/home.module#HomePageModule' },
-  { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
-  { path: 'admin', loadChildren: './admin/admin.module#AdminPageModule' },
-  { path: 'tabs', loadChildren: './pages/tabs/tabs.module#TabsPageModule' },
-  { path: 'tab1', loadChildren: './pages/tab1/tab1.module#Tab1PageModule' },
-  { path: 'tab2', loadChildren: './pages/tab2/tab2.module#Tab2PageModule' },
-  { path: 'tab3', loadChildren: './pages/tab3/tab3.module#Tab3PageModule' }
-*/
+  
 
 ];
 

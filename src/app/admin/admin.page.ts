@@ -60,12 +60,13 @@ export class AdminPage implements OnInit {
      refreshData(){
       // console.log("Actualiza");
 
-       this.http.mostrarUtlimoCambio().then(
-        async (data) => { 
+       this.http.mostrarUtlimoCambio().then(//inyecta el servicio
+        async (data) => { //la informacion recibida se guarda en data
           //console.log(data); 
 
           
-          this.resultadoUltimoCambio = data;
+          this.resultadoUltimoCambio = data;// se guarda data en una variable tipo any
+          //para acceder a los valores que se regresane en el json
 
           this.noticias = this.resultadoUltimoCambio.movimiento;
           this.estado = this.resultadoUltimoCambio.estatus;
@@ -121,10 +122,10 @@ export class AdminPage implements OnInit {
 //metodo para cerrar sesion
   cerrarSesion(){
 
-    this.storage.set('USER', '');
-    this.storage.set('CONTRA', '');
+    this.storage.set('USER', ''); //se vacia el capo USER del stroage del telefono
+    this.storage.set('CONTRA', '');// se vacia el campo CONTRA del storage del telefono
 
-    this.router.navigate(['']);
+    this.router.navigate(['']); //se navega hacia el login
 
   }
 //metodo para escanear el codigo de rack usando la api BarcodeScanner
@@ -132,8 +133,8 @@ export class AdminPage implements OnInit {
     this.barcodeScanner
       .scan()
       .then(barcodeData => {
-        
-        this.codigoRack = barcodeData.text;
+        //baarcodeData devuelve un array con dos valores el primero es el texto leido y el segundo el tipo de codgio leido
+        this.codigoRack = barcodeData.text;//se guarda el valor del codgio leido
         
       })
       .catch(err => {
@@ -144,15 +145,15 @@ export class AdminPage implements OnInit {
 //se manda a buscar el rack y devuelve el almacen, pasillo y rack o error en caso de que no lo encuentre
   buscarRack(){
 
-    this.http.buscaRack(this.codigoRack).then(
-      async (data) => { 
-        console.log(data); 
+    this.http.buscaRack(this.codigoRack).then(//se manda el codigo del rack para la busqueda
+      async (data) => { //la informacion devuelta en la promesa se guarda en array data
+        
 
-        if(data ==  null){
-          this.presentError();
+        if(data ==  null){//se valida si llego algo en el arreglo o no
+          this.presentError();//en caso de que no se encuentre el rack manda error
 
-        }else{
-          this.presentRack(data['almacen'],data['pasillo'], data['rack']);
+        }else{// en caso de que si devuelva algo...
+          this.presentRack(data['almacen'],data['pasillo'], data['rack']);//se manda a llamar el toast con los valores
         }
        
         
@@ -209,16 +210,16 @@ export class AdminPage implements OnInit {
 
   buscarProd(){
 
-    this.http.buscaProd(this.codigoProducto).then(
-      async (data) => { 
+    this.http.buscaProd(this.codigoProducto).then(// se manda a llamar el service buscaProd
+      async (data) => { //se guarda la informacion obtenida en data
         console.log(data); 
        
         
-        if(data ==  null){
-          this.presentError();
+        if(data ==  null){//se valida si el arreglo data llega vacio o no
+          this.presentError();// se manda error en casod e que el arrelgo sea null
 
         }else{
-
+//en caso de que si tenga algo el arreglo se manda a llamar el toast
         this.presentProd(data['almacen'],data['pasillo'], data['rack'], data['serie']);
         }
   
@@ -231,18 +232,18 @@ export class AdminPage implements OnInit {
     );
 
   }
-
+//toast para localizar el priduco
   async presentProd(almacen:string, pasillo:string, rack:string, serie:string) {
     const alert = await this.alertController.create({
       header: 'Posicion',
       subHeader: 'Producto '+serie,
       message: 'Se encuentra en el Almacen '+almacen+' en el pasillo '+pasillo+' en el Rack '+rack,
-      buttons: ['OK']
+      buttons: ['OK']//el toast no se esconde hasta que se toque el boton ok
     });
 
     await alert.present();
   }
-
+//abre el chat mandando el id del trbajador
   async mandarChat(){
      
       const modal = await this.modalController.create({

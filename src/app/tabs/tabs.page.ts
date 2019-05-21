@@ -18,17 +18,17 @@ export class TabsPage{
     public alertCtrl: AlertController,
     public storage:Storage
   ){
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.subscribe(params => {//manda a llamar el queryParams para obtner la informacion que viene desde el login
       if (this.router.getCurrentNavigation().extras.state) {
 
 
-        this.id = this.router.getCurrentNavigation().extras.state.id_usuario;
+        this.id = this.router.getCurrentNavigation().extras.state.id_usuario;// se guarda el id en la variable global id
         console.log("ID USUARIO  "+this.id);
       }
     });
-    if (this.id == NaN) {
+    if (this.id == NaN) {//en caso de que exista un error se manda mensaje 
       alert("Favor de cerrar sesion y volver a Iniciar");
-      navigator['app'].exitApp();
+      navigator['app'].exitApp();//se cierra la aplicacion
     }
   }
 
@@ -37,6 +37,7 @@ export class TabsPage{
     this.router.navigateByUrl('mensajes/'+this.id);
   }
 
+  //este metodo regresa el id del usuario obtenido desde el login
   public regresaId(){
     return this.id
   }

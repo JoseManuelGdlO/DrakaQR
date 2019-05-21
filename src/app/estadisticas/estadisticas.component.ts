@@ -30,11 +30,11 @@ export class EstadisticasComponent implements OnInit {
   logs:any;
   traerLogs(){
 
-    this.http.traerLogUsuario(this.id_material).then(
-      async (data) => { 
+    this.http.traerLogUsuario(this.id_material).then(//se intyecta la dependecia
+      async (data) => { //se guarda la informacion en data
         console.log(data) ; 
   
-        this.logs = data;
+        this.logs = data;//se guarda la informacion en logs
        
       },
       async (error) =>{
@@ -47,6 +47,7 @@ export class EstadisticasComponent implements OnInit {
 
   ngOnInit() {}
 
+//cierra el modal de estadisticas
   cerrarModal(){
     this.modalController.dismiss();
   }
