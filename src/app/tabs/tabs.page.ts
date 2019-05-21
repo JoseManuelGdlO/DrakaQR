@@ -24,15 +24,15 @@ export class TabsPage{
 
         this.id = this.router.getCurrentNavigation().extras.state.id_usuario;
         console.log("ID USUARIO  "+this.id);
-        if (this.id.isNaN()) {
-          alert("Favor de cerrar sesion y volver a Iniciar");
-          navigator['app'].exitApp();
-        }
       }
     });
-    
+    if (this.id == NaN) {
+      alert("Favor de cerrar sesion y volver a Iniciar");
+      navigator['app'].exitApp();
+    }
   }
 
+  // la funcion mnss(mensaje) navega hacia la pagina de mensajes mandando el id
   mnss(){
     this.router.navigateByUrl('mensajes/'+this.id);
   }
@@ -40,9 +40,9 @@ export class TabsPage{
   public regresaId(){
     return this.id
   }
-  
+  //el metodo para cerrar sesion
   async salir(){
-    
+    //se abre un alert
     const alert = await this.alertCtrl.create({
       header: 'Porfavor confirme!',
       message: 'Cerrar Sesion',
@@ -57,15 +57,16 @@ export class TabsPage{
         }, {
           text: 'Salir',
           handler: () => {
+            //en caso de que el usuario desee salir se vacian la informacion en el storage
             this.storage.set('USER', '');
             this.storage.set('CONTRA', '');
-            this.router.navigateByUrl('');
+            this.router.navigateByUrl(''); //se navega hacia el login con ' '
           }
         }
       ]
     });
 
-    await alert.present();
+    await alert.present();//se manda a llamar el alert
   }
 
 }

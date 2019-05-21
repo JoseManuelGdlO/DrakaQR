@@ -56,16 +56,18 @@ export class Tab1Page implements OnInit{
     
     this.id_usuario = parseInt(this.tabs.regresaId());
     console.log(this.id_usuario);
-    if (this.id_usuario == NaN) {
+    if (this.id_usuario == NaN) //se verifica si el id esta o no
+    {
       alert("Favor de cerrar sesion y volver a Iniciar");
-      navigator['app'].exitApp();
+      navigator['app'].exitApp();//en caso de que el id no e encuentre se aparece mensaje de advertencia 
+      //y se cierra la aplicacion
     }
-    this.estado = "D";
+    this.estado = "D";// el estado inicial es disponible a menos que se cambie 
   }
 
   ngOnInit() {
   }
-
+  //metodo generico para hacer aparecer un toast, se le mandan el mensjae, la posicion y la posicion
   async presentToast(mensaje : string, pos: any, color: string) {
     const toast = await this.toastCtrl.create({
       message : mensaje,
@@ -76,7 +78,7 @@ export class Tab1Page implements OnInit{
     toast.present();
     
   }
-
+  
   escanearRack(codigo: string, estate: any){
     
     var estadou = "Disponible";
@@ -88,11 +90,14 @@ export class Tab1Page implements OnInit{
     }else if (estate == "S") {
       var estadou = "Scrap";
     }
-
+    //se sca el primera valor del codigo S
     this.producto = codigo.charAt(0);
+    //Se saca el numero del proveedor
     this.proveedor = codigo.charAt(1) + codigo.charAt(2) + codigo.charAt(3)
     +codigo.charAt(4) + codigo.charAt(5) + codigo.charAt(6) + codigo.charAt(7);
+    //se saca el anio de produccion
     this.anioProduccion = codigo.charAt(8) + codigo.charAt(9);
+    //se saca el numero de serie del producto
     this.noSerieProducto = codigo.charAt(10) + codigo.charAt(11) + codigo.charAt(12) +
     codigo.charAt(13) + codigo.charAt(14) + codigo.charAt(15) + codigo.charAt(16) + 
     codigo.charAt(17) + codigo.charAt(18)
@@ -108,12 +113,13 @@ export class Tab1Page implements OnInit{
     })
 
   }
-
+//se manda a llamar la api BarcodeScanner para escanear el rack
   scanCodeRack(){
     this.barcodeScanner
-      .scan()
+      .scan()// en la fucion Scan
       .then(barcodeData => {
-        
+        //despues cuando la promesa se cumple arroja informacin tipo barcodeDAta
+        //que se guarda en la variable codigoRack
         this.codigoRack = barcodeData.text;
         
       })
@@ -121,29 +127,31 @@ export class Tab1Page implements OnInit{
         console.log("Error", err);
       });
   }
-
+//para pruebas
   escanearRacktest(){
     this.idCard = this.idCard + 1;
     this.noSeries.push({
       id_card: this.idCard , 
-      serie: "12131412", 
-      estado: "Pasado",
-      proveedro: "NAIKI",
-      anio: "2069",
+      serie: "005519321", 
+      estado: "Disponible",
+      proveedro: "3000568",
+      anio: "19",
       seriem: "SNAIKI6900123423"
     })
   }
-
+  //S300056819005519321 
+//metodo para prueba
   borrar(idSerie: number){
     this.noSeries.splice(idSerie,1);
     console.log(this.noSeries);
   }
-
+// se manda llamar la api BarcodeScanner
   scanCode() {
     this.barcodeScanner
-      .scan()
+      .scan()//en la funcin scan
       .then(barcodeData => {
-        
+        //despues cuando la promesa se cumple arroja informacin tipo barcodeDAta
+        //que se guarda en la variable codigoRack
         this.scannedData = barcodeData.text;
         
         
@@ -156,7 +164,7 @@ export class Tab1Page implements OnInit{
         console.log("Error", err);
       });
   }
-
+//el Alert Radio solicita el estado del producto D= aprobado, Q=Retenido y S=Scrap
   async presentAlertRadio() {
     const alert = await this.alertCtrl.create({
       header: 'Estado del Producto',
@@ -194,6 +202,7 @@ export class Tab1Page implements OnInit{
           handler: (data:string) => {
             this.estado = data;
             this.escanearRack(this.scannedData, this.estado);
+            //se manda a la funcion de escanear rack el numero del serie completo y el estado
             //this.presentToast(this.estado, 'top', 'primary');
           }
         }
@@ -202,12 +211,14 @@ export class Tab1Page implements OnInit{
 
     await alert.present();
   }
-
+//limpia los arreglos de el numero de serie y del rack
   cancelarChavos(){
     this.noSeries= [];
     this.codigoRack = "";
 
   }
+  //la fucnion escanearRack valida el formato axxa (letra, numero, numero, letra)
+  //asi como la longitud minima y maxima de la cadena
   guardarChido(){
     if (!this.codigoRack) {
       this.presentToast("Ingrese un codigo de Rack","bottom", "danger");
@@ -264,7 +275,7 @@ export class Tab1Page implements OnInit{
     }
 
   }
-  
+  //hace el guardado de la informacion recorriendo los arreglos de los numeros de serie del rack y del rack
   juntarArreglo(){
     
     if (this.id_usuario == NaN) {
@@ -274,7 +285,7 @@ export class Tab1Page implements OnInit{
         for(var i = 0; i < this.noSeries.length; i++){
           //console.log(this.noSeries[i].serie)
           
-
+//se hace la insercion en la tabla de productos
           this.http.insertarProducto(
             this.noSeries[i].serie,
             this.codigoRack,
@@ -296,7 +307,7 @@ export class Tab1Page implements OnInit{
           },(error)=>{
             this.presentToast("Error de conexión al servidor", "middle", "danger");
           })
-
+//se hace la insercion en la tabla de cambios
           this.http.insertaraCambios(
             this.noSeries[i].serie,
             this.noSeries[i].estado,
@@ -316,7 +327,7 @@ export class Tab1Page implements OnInit{
 
   
 
- 
+ //pide el numero de serie manualmente
   async abrirAlerta(){
     const alert = await this.alertCtrl.create({
       header: 'Ingrese Numero de Serie a 19 digitos',

@@ -34,7 +34,7 @@ export class AdminPage implements OnInit {
     private barcodeScanner: BarcodeScanner,
     public http: HttpService
     ) {
-
+//obtiene el id del usuario que se envia desde el login
       this.route.queryParams.subscribe(params => {
         if (this.router.getCurrentNavigation().extras.state) {
 
@@ -45,7 +45,7 @@ export class AdminPage implements OnInit {
       });
 
       
-
+//refresaca la informacion
       this.refreshData();
 
       this.task = setInterval(() => {
@@ -56,6 +56,7 @@ export class AdminPage implements OnInit {
     
      id_material:any
      resultadoUltimoCambio:any;
+
      refreshData(){
       // console.log("Actualiza");
 
@@ -85,6 +86,7 @@ export class AdminPage implements OnInit {
 
   ngOnInit() {
   }
+ //abre la pagina para poder visualizar los usuarios
 
   async abrirModalUsuarios(){
    
@@ -97,7 +99,7 @@ export class AdminPage implements OnInit {
 
     await modal.present();
   }
-
+//navega a la pagina de almacen
   async abrirModalAlmacen(){
     const modal = await this.modalController.create({
       component: AlmacenComponent,
@@ -106,7 +108,7 @@ export class AdminPage implements OnInit {
 
     await modal.present();
   }
-
+//abre la pagina de los chats
   async abrirModalChat(){
     const modal = await this.modalController.create({
       component: ChatadminComponent,
@@ -116,7 +118,7 @@ export class AdminPage implements OnInit {
     await modal.present();
   }
 
-
+//metodo para cerrar sesion
   cerrarSesion(){
 
     this.storage.set('USER', '');
@@ -125,7 +127,7 @@ export class AdminPage implements OnInit {
     this.router.navigate(['']);
 
   }
-
+//metodo para escanear el codigo de rack usando la api BarcodeScanner
   scanCodeRack(){
     this.barcodeScanner
       .scan()
@@ -139,7 +141,7 @@ export class AdminPage implements OnInit {
       });
   }
 
-
+//se manda a buscar el rack y devuelve el almacen, pasillo y rack o error en caso de que no lo encuentre
   buscarRack(){
 
     this.http.buscaRack(this.codigoRack).then(
@@ -168,7 +170,7 @@ export class AdminPage implements OnInit {
 
   }
 
-
+//aler que se manda llamar cuanto se encuentra la posicion del objeto
   async presentRack(almacen:string, pasillo:string, rack:string) {
     const alert = await this.alertController.create({
       header: 'Posicion',
@@ -179,7 +181,7 @@ export class AdminPage implements OnInit {
 
     await alert.present();
   }
-
+//alert para presentar error en caso de que no se encuentre el elemento
   async presentError() {
     const alert = await this.alertController.create({
       header: 'Posicion',

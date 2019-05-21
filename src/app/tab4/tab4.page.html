@@ -5,6 +5,33 @@
 </ion-header>
 
 <ion-content>
+    <div style="text-align: center; background-color: rgba(0, 0, 255, 0.322)">
+        <ion-row>
+            <ion-col size="9">
+                <ion-item>
+                    <ion-label position="stacked">N° de Producto</ion-label>
+                    <ion-input placeholder="Ej.S293182819234233" [(ngModel)]="codigoProducto">
+                        
+                    </ion-input>
+                  </ion-item>
+              
+            </ion-col>
+            <ion-col size="3">
+                <ion-button expand="full" (click)="scanCodeProd()">
+                    <ion-ripple-effect></ion-ripple-effect>
+                    <ion-icon name="camera"></ion-icon>
+                  </ion-button>
+              
+            </ion-col>
+          </ion-row>
+    
+          <ion-button expand="full" (click)="buscarProd()">Buscar Posicion del Producto
+              <ion-ripple-effect></ion-ripple-effect>
+            </ion-button>
+    
+    </div>
+    
+
     <ion-list>
         <ion-card *ngFor="let item of logs">
             <ion-card-header>

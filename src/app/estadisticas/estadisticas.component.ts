@@ -17,7 +17,7 @@ export class EstadisticasComponent implements OnInit {
 
     this.id_material = this.navParams.get('id_material');
     this.nombre = this.navParams.get('nombre');
-
+//llama a la funcion traerLogs en cuanto se carga la pagina
     this.traerLogs();
 
   /*  this.task = setInterval(() => {
@@ -26,7 +26,7 @@ export class EstadisticasComponent implements OnInit {
     }, 10000);*/
 
   }
-
+//traerlogs carga los ultimos cambios realizados 
   logs:any;
   traerLogs(){
 
