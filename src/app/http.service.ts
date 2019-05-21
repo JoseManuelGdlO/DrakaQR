@@ -260,7 +260,8 @@ eliminarAlmacen(rack:any){
 
 agregarUsuario(data){
 
-  var url = this.inicioURL+'insertarUsuario/'+data.nombreCompleto+'/'+data.usuario+'/'+data.contra+'/2/';
+  var url = this.inicioURL+'insertarUsuario/'+data.nombreCompleto+'/'+data.usuario+'/'+data.contra+'/2';
+  console.log(url);
   return new Promise((resolve, reject) => {
    this.http.get(url)
       .subscribe(data => {
