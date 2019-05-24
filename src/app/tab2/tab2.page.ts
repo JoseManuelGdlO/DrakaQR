@@ -3,6 +3,7 @@ import { ToastController, AlertController } from '@ionic/angular';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { TabsPage } from '../tabs/tabs.page';
 import { HttpService } from '../http.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tab2',
@@ -36,7 +37,8 @@ export class Tab2Page implements OnInit{
       private toastCtrl: ToastController,
       private alertCtrl: AlertController,
       private http : HttpService,
-      public tabs : TabsPage
+      public tabs : TabsPage,
+      private router: Router
   ) { 
     this.noSeries = [];
     this.jsonDataLector = [];
@@ -59,6 +61,9 @@ export class Tab2Page implements OnInit{
   }
 
   ngOnInit() {
+  }
+  mnss(){
+    this.router.navigateByUrl('mensajes/'+this.id_usuario);
   }
 //metodo generico para hacer aparecer un toast
   async presentToast(mensaje : string, pos: any, color: string) {

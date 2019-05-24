@@ -6,6 +6,7 @@ import { HttpService } from '../http.service';
 import { LoginPage } from '../login/login.page';
 import { TabsPage } from '../tabs/tabs.page';
 import { parse } from 'querystring';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -42,7 +43,8 @@ export class Tab1Page implements OnInit{
       private alertCtrl: AlertController,
       private http : HttpService,
       public tabs : TabsPage,
-      private platform: Platform
+      private platform: Platform,
+      private router : Router
   ) { 
     this.noSeries = [];
     this.jsonDataLector = [];
@@ -67,6 +69,11 @@ export class Tab1Page implements OnInit{
 
   ngOnInit() {
   }
+
+  mnss(){
+    this.router.navigateByUrl('mensajes/'+this.id_usuario);
+  }
+
   //metodo generico para hacer aparecer un toast, se le mandan el mensjae, la posicion y la el color
   async presentToast(mensaje : string, pos: any, color: string) {
     const toast = await this.toastCtrl.create({

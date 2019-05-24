@@ -4,6 +4,7 @@ import { delay, async } from 'q';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { TabsPage } from '../tabs/tabs.page';
 import { HttpService } from '../http.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tab3',
@@ -30,7 +31,8 @@ export class Tab3Page implements OnInit{
     private toastCtrl: ToastController,
     public tabs : TabsPage,
     private http : HttpService,
-    private alertCtrl : AlertController
+    private alertCtrl : AlertController,
+    private router: Router
   ) { 
 
     this.idCard = 0;
@@ -47,7 +49,10 @@ export class Tab3Page implements OnInit{
   ngOnInit() {
   }
 
-  
+  mnss(){
+    this.router.navigateByUrl('mensajes/'+this.id_usuario);
+  }
+
   borrar(idSerie: number){
     this.noSeries.splice(idSerie,1);
     //delete this.noSeries[1];

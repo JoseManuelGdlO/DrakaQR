@@ -3,6 +3,7 @@ import { HttpService } from '../http.service';
 import { TabsPage } from '../tabs/tabs.page';
 import { AlertController } from '@ionic/angular';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tab4',
@@ -15,7 +16,8 @@ export class Tab4Page implements OnInit {
 
   constructor(public http:HttpService, public tabs: TabsPage,
     public alertController: AlertController,
-    public barcodeScanner : BarcodeScanner) { 
+    public barcodeScanner : BarcodeScanner,
+    private router: Router) { 
 // se manda a llamar la fucion regresaId de la clase tabs.ts que regresa un entero con el valor e la id
     this.id_usuario = parseInt(this.tabs.regresaId());
     this.traerLogs();
@@ -82,7 +84,9 @@ export class Tab4Page implements OnInit {
 
     await alert.present();
   }
-
+  mnss(){
+    this.router.navigateByUrl('mensajes/'+this.id_usuario);
+  }
 
   logs:any;
   traerLogs(){

@@ -138,6 +138,10 @@ export class LoginPage implements OnInit {
     );
   }
 
+  move(){
+    this.router.navigateByUrl('/app/tabs/tab1');
+  }
+
   async presentToast(tipo:string) {
     const toast = await this.toastController.create({
       message: 'El campo '+tipo+'  esta vacio',
